@@ -36,7 +36,7 @@ export default function Home() {
 
 				</nav>
 
-				<p className={styles.tag}>Tattoo Artist - Black and Grey - Fine Line</p>
+				<p className={styles.tag}>Black and Grey - Color - Pop Culture - Portraits</p>
 			</div>
 		</div>
 	);

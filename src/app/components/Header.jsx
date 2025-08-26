@@ -6,7 +6,7 @@ import styles from "./Header.module.css";
 export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const timerRef = useRef < NodeJS.Timeout | null > (null);
+  const timerRef = useRef(null);
 
   // Hide on scroll (desktop and mobile)
   useEffect(() => {
