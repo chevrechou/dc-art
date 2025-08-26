@@ -1,0 +1,89 @@
+/* shared */
+.panel {
+  position: fixed;
+  background-color: rgba(17, 17, 17, 0.85);
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+  transition: opacity 0.25s ease, transform 0.35s ease;
+  will-change: transform, opacity;
+}
+
+/* top */
+.top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+}
+.top.hidden {
+  transform: translateX(-50%) translateY(-110%);
+  opacity: 0;
+}
+
+/* bottom */
+.bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+}
+.bottom.hidden {
+  transform: translateX(-50%) translateY(110%);
+  opacity: 0;
+}
+
+/* left */
+.left {
+  top: 50%;
+  left: 0;
+  transform: translateX(0) translateY(-50%);
+}
+.left.hidden {
+  transform: translateX(-110%) translateY(-50%);
+  opacity: 0;
+}
+
+/* right */
+.right {
+  top: 50%;
+  right: 0;
+  transform: translateX(0) translateY(-50%);
+}
+.right.hidden {
+  transform: translateX(110%) translateY(-50%);
+  opacity: 0;
+}
+
+/* link styles */
+.link {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease-in-out;
+}
+
+/* vertical text for side links */
+.left .link,
+.right .link {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+/* left: rotate clockwise so text faces the page center */
+.left .link { transform: rotate(180deg); }
+
+
+
+/* motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition: opacity 0.01s linear;
+  }
+  .top.hidden,
+  .bottom.hidden,
+  .left.hidden,
+  .right.hidden {
+    transform: none;
+  }
+}
