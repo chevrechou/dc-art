@@ -1,0 +1,25 @@
+/* Paint the entire viewport and prevent horizontal overflow */
+html,
+body {
+	background: #0b0b0b;
+	color-scheme: dark;
+	height: 100%;
+}
+
+/* Default header height var, used to offset fixed header site-wide */
+:root {
+	--header-h: 72px;
+}
+
+/* Mobile header can be a bit shorter */
+@media (max-width: 768px) {
+	:root {
+		--header-h: 64px;
+	}
+}
+
+/* Apply top padding to every page under the fixed header */
+.site-main {
+	min-height: 100dvh;
+	padding-top: var(--header-h);
+}

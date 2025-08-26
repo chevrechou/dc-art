@@ -5,47 +5,51 @@
   background: #0a0a0a;
   color: #f5f5f5;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  overflow: hidden;
-  /* remove scrolling overflow (no horizontal bar) */
+  overflow-x: hidden;
+  /* prevent horizontal bar */
+  isolation: isolate;
+  /* keep bg layers under content */
 }
 
+/* Parallax background tiles */
 .bgWrap {
   position: fixed;
   inset: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* exactly 3 tiles */
-  gap: 0px;
+  gap: 0;
   filter: saturate(120%);
-  z-index: 0;
+  z-index: -2;
+  /* behind everything */
+  height: 100vh; 
   pointer-events: none;
   opacity: 0.95;
-
-  transform: scale(1.01);
 }
 
 .bgTile {
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  /* fixed full height tiles */
+  height: 100%;  
+  will-change: transform;
+  transform: translate3d(0, 0, 0) scale(1.06);
 }
 
+/* mitigate hairline seams on some GPUs */
 .bgTile+.bgTile {
   margin-left: -1px;
 }
 
 .bgVignette {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100dvh;
+  inset: 0;
   background:
     radial-gradient(80% 80% at 50% 40%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .35) 60%, rgba(0, 0, 0, .75) 100%),
     linear-gradient(to bottom, rgba(0, 0, 0, .55), rgba(0, 0, 0, .2) 40%, rgba(0, 0, 0, .6));
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
+  /* over tiles, under content */
 }
 
 /* Player card */
@@ -75,7 +79,6 @@
   overflow: hidden;
   border: 2px solid rgba(143, 142, 255, 0.38);
   background: #f5f4f452;
-
 }
 
 .headshot img {
@@ -125,6 +128,7 @@
   background: rgba(0, 0, 0, .28);
   backdrop-filter: blur(8px);
 }
+
 .summary {
   margin: .6rem 0 1rem;
   line-height: 1.8;
@@ -133,8 +137,8 @@
   letter-spacing: 0.04rem;
 }
 
-/* Two logos in a row at the bottom */
-.sponsorLabel{
+/* Sponsors */
+.sponsorLabel {
   margin: 2rem auto 0rem;
   font-size: 1.1rem;
   letter-spacing: 0.1rem;
@@ -145,8 +149,7 @@
 .sponsorStrip {
   position: relative;
   z-index: 2;
-  /* max-width: 980px; */
-  display: flex;;
+  display: flex;
   margin: 1rem auto 1.3rem;
   justify-content: end;
   gap: 1rem;
@@ -159,8 +162,8 @@
   justify-content: center;
   padding: 1rem 1.5rem;
   border-radius: 16px;
-  border: 2px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.30);
+  border: 2px solid rgba(255, 255, 255, .14);
+  background: rgba(0, 0, 0, .30);
   backdrop-filter: blur(8px);
   transition: transform .15s ease, border-color .2s ease, background .2s ease;
   width: fit-content;
@@ -168,12 +171,12 @@
 
 .sponsorCard:hover {
   transform: translateY(-2px);
-  border-color: rgba(255,255,255,.35);
-  background: rgba(255,255,255,.08);
+  border-color: rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, .08);
 }
 
 .sponsorLogo {
-  height: 70px;          /* tweak as needed */
+  height: 70px;
   width: auto;
   object-fit: contain;
   filter: grayscale(100%) contrast(1.1) brightness(.95);
@@ -182,14 +185,7 @@
 
 .sponsorCard:hover .sponsorLogo {
   filter: none;
-  opacity: 1;
 }
-
-/* Keep two columns on most phones. Drop to 1 if very narrow */
-@media (max-width: 480px) {
-  .sponsorStrip { grid-template-columns: 1fr; }
-}
-
 
 /* Rows section */
 .rows {
@@ -211,15 +207,21 @@
 
 .rowAlt {
   grid-template-columns: 1.2fr 1fr;
-  /* text | image */
 }
 
+/* text | image */
+
+/* Parallax on in-content images */
 .rowImage {
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.12s ease;
+  /* minor smoothing */
 }
 
 .rowImage img {
@@ -231,9 +233,11 @@
 }
 
 .rowText {
-  background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  background: rgba(0, 0, 0, 0.35);
+  /* legibility on busy bg */
   padding: 1.5rem;
   border-radius: 12px;
+  margin-bottom: 2.5rem;
 }
 
 .rowText h2 {
@@ -246,13 +250,57 @@
   line-height: 1.5;
   font-size: 1.2rem;
   color: #f0f0f0;
-  opacity: 3;;
+  opacity: 0.95;
+  /* was 3 which is invalid */
+}
+.rowText ul {
+  list-style: none; /* remove default dots */
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.rowText li {
+  position: relative;
+  padding-left: 1.5rem; /* space for star */
+  margin-bottom: 0.5rem;
+}
+
+.rowText li::before {
+  content: "★";                 /* Unicode star */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #e0b15b;               /* gold star */
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* Animations */
+@keyframes dropIn {
+  from {
+    transform: translateY(-18px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* Responsive */
 @media (max-width: 960px) {
   .head {
-   
     display: block;
   }
 
@@ -261,7 +309,8 @@
     height: 300px;
     border-radius: 12px;
   }
-  .name{
+
+  .name {
     margin-top: 1rem;
   }
 
@@ -269,19 +318,33 @@
   .rowAlt {
     grid-template-columns: 1fr;
   }
+
   .sponsorStrip {
     justify-content: center;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     margin: 1rem;
   }
-  .sponsorLabel{
+
+  .sponsorLabel {
     text-align: center;
   }
-  
-  .sponsorLogo{
+
+  .sponsorLogo {
     height: 60px;
   }
+}
 
+@media (max-width: 480px) {
+  .sponsorStrip {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced motion safety */
+@media (prefers-reduced-motion: reduce) {
+
+  .bgTile,
+  .rowImage {
+    transform: none !important;
+    transition: none !important;
+  }
 }

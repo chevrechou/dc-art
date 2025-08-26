@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FrameNav from "./components/FrameNav";
 import SiteChrome from "./components/SiteChrome";
+import "./globals.css";  // ✅ global styles here
 
 export const metadata = {
   title: "Derek Calkins Tattoo Portfolio",

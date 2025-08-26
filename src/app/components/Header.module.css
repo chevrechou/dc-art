@@ -34,17 +34,26 @@
 }
 
 .link {
-	color: #fff;
-	text-decoration: none;
-	font-size: 1.2rem;
-	letter-spacing: 1.38px;
-	padding: 0.25rem 0.1rem;
-	transition: color 0.2s ease;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  letter-spacing: 1.38px;
+  padding: 0.25rem 0.1rem;
+  transition: color 0.2s ease;
 }
 
 .link:hover {
-	color: #e0b15b;
+  color: #e0b15b;
 }
+
+/* highlight the current page */
+.active {
+  color: #e0b15b;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
 
 /* Burger button (hidden on desktop) */
 .burger {

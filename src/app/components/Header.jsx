@@ -2,12 +2,20 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.css";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const timerRef = useRef(null);
+  const pathname = usePathname();
 
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/gallery", label: "Gallery" },
+    { href: "/contact", label: "Contact" },
+  ];
   // Hide on scroll (desktop and mobile)
   useEffect(() => {
     const onScroll = () => {
@@ -57,11 +65,16 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className={styles.navDesktop} aria-label="Primary">
-          <Link href="/" className={styles.link}>Home</Link>
-          <Link href="/about" className={styles.link}>About</Link>
-          <Link href="/gallery" className={styles.link}>Gallery</Link>
-          <Link href="/contact" className={styles.link}>Contact</Link>
+        <nav className={styles.navDesktop}>
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`${styles.link} ${pathname === href ? styles.active : ""}`}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
 
         {/* Burger button (mobile) */}

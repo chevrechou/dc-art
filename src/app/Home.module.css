@@ -1,4 +1,3 @@
-
 .wrap {
   position: relative;
   min-height: 100vh;
@@ -39,7 +38,7 @@
   place-items: center;
   text-align: center;
   pointer-events: none;
- 
+
   /* backdrop-filter: blur(1.1px); adds subtle blur for readability */
 }
 
@@ -48,7 +47,8 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #fff;
-  text-shadow: 0 3px 24px rgba(0, 0, 0, 0.7); /* stronger shadow */
+  text-shadow: 0 3px 24px rgba(0, 0, 0, 0.7);
+  /* stronger shadow */
   margin: 0;
   opacity: 0;
   animation: dropIn 1.25s ease forwards 300ms;
@@ -72,7 +72,8 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 999px;
   backdrop-filter: blur(4px);
-  background: rgba(0, 0, 0, 0.45); /* faint dark background for legibility */
+  background: rgba(0, 0, 0, 0.45);
+  /* faint dark background for legibility */
   opacity: 0;
   animation: dropIn 1.25s ease forwards 1.5s;
 }
@@ -85,7 +86,7 @@
 .tag {
   margin-top: 0.6rem;
   font-size: clamp(0.9rem, 2.2vw, 1.25rem);
-  color: rgba(255, 255, 255,1);
+  color: rgba(255, 255, 255, 1);
   letter-spacing: 0.04em;
   font-weight: 800;
   opacity: 0;
