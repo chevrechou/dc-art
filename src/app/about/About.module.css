@@ -17,12 +17,11 @@
   inset: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* exactly 3 tiles */
   gap: 0;
   filter: saturate(120%);
   z-index: -2;
   /* behind everything */
-  height: 100vh; 
+  height: 100dvh;
   pointer-events: none;
   opacity: 0.95;
 }
@@ -30,8 +29,8 @@
 .bgTile {
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
-  height: 100%;  
+  min-height: 100dvh;
+  height: 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0) scale(1.06);
 }
@@ -233,11 +232,14 @@
 }
 
 .rowText {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.55);
   /* legibility on busy bg */
   padding: 1.5rem;
   border-radius: 12px;
   margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+  /* always above image */
 }
 
 .rowText h2 {
@@ -251,26 +253,32 @@
   font-size: 1.2rem;
   color: #f0f0f0;
   opacity: 0.95;
-  /* was 3 which is invalid */
 }
+
+.rowText strong {
+  color: #fafafa;
+  font-weight: 900;
+  letter-spacing: 0.08rem;
+}
+
 .rowText ul {
-  list-style: none; /* remove default dots */
+  list-style: none;
   padding-left: 0;
   margin: 1rem 0;
 }
 
 .rowText li {
   position: relative;
-  padding-left: 1.5rem; /* space for star */
+  padding-left: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .rowText li::before {
-  content: "★";                 /* Unicode star */
+  content: "★";
   position: absolute;
   left: 0;
   top: 0;
-  color: #e0b15b;               /* gold star */
+  color: #e0b15b;
   font-size: 1rem;
   line-height: 1.2;
 }
@@ -298,25 +306,96 @@
   }
 }
 
-/* Responsive */
+/* =========================
+   Responsive: tablets/phones
+   ========================= */
 @media (max-width: 960px) {
+  .bgWrap{
+    filter: saturate(100%);
+    opacity: 0.8;
+  }
+  .card {
+    margin: 5rem 1rem 1.5rem;
+    padding: 1.5rem;
+  }
+
   .head {
     display: block;
   }
 
   .headshot {
-    width: 300px;
-    height: 300px;
-    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
   }
 
   .name {
     margin-top: 1rem;
   }
 
+  /* Stack image over text for all rows on mobile */
   .row,
   .rowAlt {
     grid-template-columns: 1fr;
+    margin: 0 0 1.75rem;
+    gap: 1.25rem;
+  }
+
+  /* Make the image full-bleed inside the rows container */
+  .rows {
+    padding: 0;
+  }
+
+  .row {
+    padding: 0 0 0;
+  }
+
+  .rowImage {
+    border-radius: 18px;
+
+    /* edge to edge */
+    border-left: 0;
+    border-right: 0;
+    max-height: 60vh;
+    margin: 0 0.4rem
+      /* avoid super tall images */
+  }
+
+  .rowImage img {
+    object-position: center;
+  }
+
+  .row .rowImage,
+  .rowAlt .rowImage {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .row .rowText,
+  .rowAlt .rowText {
+    grid-column: 1;
+    grid-row: 2;
+
+  }
+
+  /* Text card with comfortable spacing */
+  .rowText {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: none;
+    border-right: none;
+    border-radius: 10px;
+    padding: 1.1rem 1rem 1.25rem;
+    margin: 0 1.5rem;
+  }
+
+  .rowText h2 {
+    font-size: 1.6rem;
+  }
+
+  .rowText p {
+    font-size: 1.05rem;
   }
 
   .sponsorStrip {
@@ -333,9 +412,22 @@
   }
 }
 
-@media (max-width: 480px) {
-  .sponsorStrip {
-    grid-template-columns: 1fr;
+/* very small phones */
+@media (max-width: 420px) {
+  .rowImage {
+    max-height: 50vh;
+  }
+
+  .rowText {
+    padding: 1rem 0.9rem 1.1rem;
+  }
+
+  .rowText h2 {
+    font-size: 1.45rem;
+  }
+
+  .rowText p {
+    font-size: 1rem;
   }
 }
 
