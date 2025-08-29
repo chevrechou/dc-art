@@ -1,8 +1,8 @@
 /* Page wrapper */
 .page {
-    /* padding: 96px 16px 40px; */
+    padding-top: 116px;
     /* room for fixed header */
-    margin: 6rem 2rem 0;
+    margin: 0rem 2rem 0;
     color: #ffffff;
     background: none;
     /* transparent over site bg */
@@ -132,7 +132,7 @@
 /* Instagram */
 .embedTitle {
     margin: 0 0 10px;
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: #fff;
 }
