@@ -1,7 +1,6 @@
 /* Paint the entire viewport and prevent horizontal overflow */
 html,
 body {
-	background: #0b0b0b;
 	color-scheme: dark;
 	height: 100%;
 }

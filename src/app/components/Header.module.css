@@ -12,11 +12,13 @@
 }
 
 .inner {
-	margin: 0 2rem;
+	margin: 10px 2rem;
 	padding: 1.1rem 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	text-transform: uppercase;
+
 }
 
 .logo {
@@ -24,7 +26,7 @@
 	text-decoration: none;
 	font-weight: 700;
 	letter-spacing: 3.8px;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 }
 
 /* Desktop nav */
@@ -34,24 +36,24 @@
 }
 
 .link {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.2rem;
-  letter-spacing: 1.38px;
-  padding: 0.25rem 0.1rem;
-  transition: color 0.2s ease;
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.15rem;
+	letter-spacing: 1.38px;
+	padding: 0.25rem 0.1rem;
+	transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: #e0b15b;
+	color: #e0b15b;
 }
 
 /* highlight the current page */
 .active {
-  color: #e0b15b;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 2px;
+	color: #e0b15b;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	text-decoration-thickness: 2px;
 }
 
 

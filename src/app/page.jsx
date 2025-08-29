@@ -29,14 +29,14 @@ export default function Home() {
 
 				{/* overlay links */}
 				<nav className={styles.overlayNav} aria-label="Primary">
-					<Link href="/" className={styles.overlayLink}>Home</Link>
+
 					<Link href="/about" className={styles.overlayLink}>About</Link>
 					<Link href="/gallery" className={styles.overlayLink}>Gallery</Link>
 					<Link href="/contact" className={styles.overlayLink}>Contact</Link>
 
 				</nav>
 
-				<p className={styles.tag}>Black and Grey - Color - Pop Culture - Portraits</p>
+				<p className={styles.tag}>Black and Grey  -  Color  -  Pop Culture  -  Portraits</p>
 			</div>
 		</div>
 	);
