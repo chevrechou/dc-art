@@ -114,29 +114,35 @@ export default function About() {
             </ul>
 
             <p className={styles.summary}>
-              Las Vegas based tattoo artist with 17 years of experience. I specialize in
-              large scale pieces, black and grey realism, color realism, surrealism, and pop culture.
+              Derek is a Las Vegas–based tattoo artist with 17 years of experience.
+              He specializes in large-scale pieces, black and grey realism, color realism, and surrealism,
+              creating bold, detailed work inspired by pop culture that flows naturally and lasts beautifully.
             </p>
+            <div className={styles.sponsors}>
 
-            <div className={styles.sponsorLabel}>Proudly Sponsored By:</div>
-            <section className={styles.sponsorStrip} aria-label="Sponsors">
-              <a
-                href="https://rawpigments.com"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.sponsorCard}
-              >
-                <img src="/images/raw-logo.jpg" alt="Raw Pigments logo" className={styles.sponsorLogo} />
-              </a>
-              <a
-                href="https://hustlebutter.com"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.sponsorCard}
-              >
-                <img src="/images/hustle-logo.jpg" alt="Hustle Butter Deluxe logo" className={styles.sponsorLogo} />
-              </a>
-            </section>
+
+              <div className={styles.sponsorLabel}>Proudly Sponsored By:</div>
+              <section className={styles.sponsorStrip} aria-label="Sponsors">
+                <div className={styles.sponsorCard}>
+                  <div className={styles.sponsorLabel}>Raw Pigments</div>
+                  <img
+                    src="/images/raw-logo.jpg"
+                    alt="Raw Pigments logo"
+                    className={styles.sponsorLogo}
+                  />
+                </div>
+
+                <div className={styles.sponsorCard}>
+                  <div className={styles.sponsorLabel}>Hustle Butter</div>
+                  <img
+                    src="/images/hustle-logo.jpg"
+                    alt="Hustle Butter Deluxe logo"
+                    className={styles.sponsorLogo}
+                  />
+                </div>
+              </section>
+            </div>
+
           </div>
         </div>
       </section>
