@@ -320,7 +320,7 @@
 @media (max-width: 640px) {
     .page {
         /* padding: 88px 14px 28px; */
-        margin: 0 1rem;
+        margin: 0;
     }
 
     .row {
