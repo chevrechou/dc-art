@@ -69,7 +69,7 @@
     /* media | form */
     gap: 28px;
     align-items: start;
-    margin-top: 40px;
+    margin: 40px 0 60px;
 }
 
 /* Left column (video + instagram stacked) */
@@ -152,6 +152,8 @@
 /* Form */
 .formWrap {
     padding: 20px;
+
+    padding-bottom: 40px;
     border-radius: 18px;
 }
 
