@@ -3,11 +3,16 @@ html,
 body {
 	color-scheme: dark;
 	height: 100%;
+	width: 100%;
 }
 
 /* Default header height var, used to offset fixed header site-wide */
 :root {
 	--header-h: 72px;
+}
+
+main{
+	padding: 0;
 }
 
 /* Mobile header can be a bit shorter */
