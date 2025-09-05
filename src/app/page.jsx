@@ -32,6 +32,7 @@ export default function Home() {
 
 					<Link href="/about" className={styles.overlayLink}>About</Link>
 					<Link href="/gallery" className={styles.overlayLink}>Gallery</Link>
+					<Link href="/upcoming" className={styles.overlayLink}>Upcoming</Link>
 					<Link href="/contact" className={styles.overlayLink}>Contact</Link>
 
 				</nav>
