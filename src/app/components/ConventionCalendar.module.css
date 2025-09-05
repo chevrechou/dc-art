@@ -1,307 +1,307 @@
 /* Make sure the calendar sits above parallax bg */
 .wrap {
-    position: relative;
-    z-index: 2;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1rem 1rem 2rem;
-    color: #f6f6f6;
+	position: relative;
+	z-index: 2;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 1rem 1rem 2rem;
+	color: #f6f6f6;
 }
 
 /* Header */
 .header {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-bottom: 0.75rem;
-    justify-content: center;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin-bottom: 0.75rem;
+	justify-content: center;
 }
 
 .title {
-    margin: 0;
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
-    font-weight: 800;
-    letter-spacing: 0.02em;
+	margin: 0;
+	font-size: clamp(1.3rem, 2vw, 1.6rem);
+	font-weight: 800;
+	letter-spacing: 0.02em;
 }
 
 .controls {
-    margin-left: auto;
+	margin-left: auto;
 }
 
 
 .active {
-    background: #111;
-    color: #fff;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+	background: #111;
+	color: #fff;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* Layout: calendar left, details right */
 .monthView {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
 }
 
 .monthBox {
-    flex: 1 1 0;
-    min-width: 0;
-    /* allow shrink */
+	flex: 1 1 0;
+	min-width: 0;
+	/* allow shrink */
 }
 
 .detail {
-    flex: 0 0 40%;
-    max-width: 460px;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 14px;
-    padding: 14px;
-    min-height: 240px;
-    backdrop-filter: blur(10px);
+	flex: 0 0 40%;
+	max-width: 460px;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.45);
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	border-radius: 14px;
+	padding: 14px;
+	min-height: 240px;
+	backdrop-filter: blur(10px);
 }
 
 /* Month bar pinned to calendar panel */
 .monthBar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
 }
 
 .monthLabel {
-    flex: 1;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+	flex: 1;
+	text-align: center;
+	font-weight: 700;
+	letter-spacing: 0.02em;
 }
 
 /* Dark nav buttons */
 .nav {
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    cursor: pointer;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	cursor: pointer;
 }
 
 /* Calendar panel */
 .calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 14px;
-    padding: 10px;
-    backdrop-filter: blur(10px);
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 6px;
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 14px;
+	padding: 10px;
+	backdrop-filter: blur(10px);
 }
 
 /* Cells go glassy, readable on dark bg */
 .cell {
-    min-height: 72px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    padding: 8px;
-    text-align: left;
-    position: relative;
-    color: #f0f0f0;
+	min-height: 72px;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 12px;
+	padding: 8px;
+	text-align: left;
+	position: relative;
+	color: #f0f0f0;
 }
 
 .dow {
-    background: transparent;
-    border: 0;
-    text-align: center;
-    font-weight: 700;
-    color: #bdbdbd;
-    letter-spacing: 0.02em;
-    min-height: auto;
-    padding: 4px 0 8px;
+	background: transparent;
+	border: 0;
+	text-align: center;
+	font-weight: 700;
+	color: #bdbdbd;
+	letter-spacing: 0.02em;
+	min-height: auto;
+	padding: 4px 0 8px;
 }
 
 .day {
-    cursor: pointer;
-    transition: transform .06s ease, box-shadow .12s ease, border-color .12s ease;
+	cursor: pointer;
+	transition: transform .06s ease, box-shadow .12s ease, border-color .12s ease;
 }
 
 .day:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+	transform: translateY(-1px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
 }
 
 .muted {
-    opacity: 0.45;
+	opacity: 0.45;
 }
 
 .daySelected {
-    outline: 2px solid #e0b15b;
-    outline-offset: -2px;
+	outline: 2px solid #e0b15b;
+	outline-offset: -2px;
 }
 
 .dayNum {
-    font-weight: 700;
-    font-size: 0.95rem;
+	font-weight: 700;
+	font-size: 0.95rem;
 }
 
 /* Event dots */
 .dots {
-    position: absolute;
-    left: 8px;
-    bottom: 8px;
-    display: flex;
-    gap: 4px;
+	position: absolute;
+	left: 8px;
+	bottom: 8px;
+	display: flex;
+	gap: 4px;
 }
 
 .dot,
 .dotMore {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: #bbb;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+	width: 8px;
+	height: 8px;
+	border-radius: 999px;
+	background: #bbb;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 .t_convention {
-    background: #6e7bff;
+	background: #6e7bff;
 }
 
 .t_expo {
-    background: #31d0a0;
+	background: #31d0a0;
 }
 
 .t_guest {
-    background: #ff9956;
+	background: #ff9956;
 }
 
 .dotMore {
-    background: #999;
-    width: 14px;
-    border-radius: 999px;
+	background: #999;
+	width: 14px;
+	border-radius: 999px;
 }
 
 /* Event card */
 .card {
-    background: rgba(0, 0, 0, 0.55);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-    color: #f5f5f5;
+	background: rgba(0, 0, 0, 0.55);
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	border-radius: 14px;
+	padding: 14px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+	color: #f5f5f5;
 }
 
 .cardTop {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
 }
 
 .cardNav {
-    margin-left: auto;
-    display: flex;
-    gap: 6px;
+	margin-left: auto;
+	display: flex;
+	gap: 6px;
 }
 
 .arrow {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    cursor: pointer;
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	cursor: pointer;
 }
 
 .arrowDisabled {
-  opacity: 0.4;
-  pointer-events: none;
+	opacity: 0.4;
+	pointer-events: none;
 }
 
 .cardTitle {
-    margin: 8px 0 2px;
-    font-size: 1.1rem;
-    font-weight: 800;
+	margin: 8px 0 2px;
+	font-size: 1.1rem;
+	font-weight: 800;
 }
 
 .meta {
-    color: #d8d8d8;
-    font-size: 0.92rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+	color: #d8d8d8;
+	font-size: 0.92rem;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 
 .sepDot {
-    opacity: 0.6;
+	opacity: 0.6;
 }
 
 .details {
-    margin: 8px 0 10px;
-    font-size: 0.95rem;
-    color: #ededed;
+	margin: 8px 0 10px;
+	font-size: 0.95rem;
+	color: #ededed;
 }
 
 .link {
-    color: #ffd494;
-    text-decoration: underline;
+	color: #ffd494;
+	text-decoration: underline;
 }
 
 /* Badges */
 .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 8px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    border: 1px solid transparent;
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	border: 1px solid transparent;
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
 }
 
 .b_convention {
-    border-color: rgba(110, 123, 255, 0.35);
-    background: rgba(110, 123, 255, 0.18);
+	border-color: rgba(110, 123, 255, 0.35);
+	background: rgba(110, 123, 255, 0.18);
 }
 
 .b_expo {
-    border-color: rgba(49, 208, 160, 0.35);
-    background: rgba(49, 208, 160, 0.18);
+	border-color: rgba(49, 208, 160, 0.35);
+	background: rgba(49, 208, 160, 0.18);
 }
 
 .b_guest {
-    border-color: rgba(255, 153, 86, 0.35);
-    background: rgba(255, 153, 86, 0.18);
+	border-color: rgba(255, 153, 86, 0.35);
+	background: rgba(255, 153, 86, 0.18);
 }
 
 /* Responsive stack on mobile: calendar above details */
 @media (max-width: 900px) {
-    .monthView {
-        flex-direction: column;
-        gap: 12px;
-    }
+	.monthView {
+		flex-direction: column;
+		gap: 12px;
+	}
 
-    .monthBox {
-        width: 100%;
-        order: 1;
-    }
+	.monthBox {
+		width: 100%;
+		order: 1;
+	}
 
-    .detail {
-        width: 90%;
-        max-width: none;
-        order: 2;
-        min-height: 0;
-    }
+	.detail {
+		width: 90%;
+		max-width: none;
+		order: 2;
+		min-height: 0;
+	}
 }
 
 /* Slightly taller cells for touch comfort */
 @media (max-width: 600px) {
-    .cell {
-        min-height: 64px;
-    }
+	.cell {
+		min-height: 64px;
+	}
 
-    .dayNum {
-        font-size: 0.9rem;
-    }
+	.dayNum {
+		font-size: 0.9rem;
+	}
 }
