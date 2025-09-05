@@ -14,6 +14,7 @@ export default function Header() {
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/gallery", label: "Gallery" },
+    { href: "/upcoming", label: "Upcoming" },
     { href: "/contact", label: "Contact" },
   ];
   // Hide on scroll (desktop and mobile)
@@ -100,7 +101,8 @@ export default function Header() {
           <Link href="/" className={styles.mLink} onClick={() => setOpen(false)}>Home</Link>
           <Link href="/about" className={styles.mLink} onClick={() => setOpen(false)}>About</Link>
           <Link href="/gallery" className={styles.mLink} onClick={() => setOpen(false)}>Gallery</Link>
-          <Link href="/contact" className={styles.mLink} onClick={() => setOpen(false)}>Contact</Link>
+          <Link href="/upcoming" className={styles.mLink} onClick={() => setOpen(false)}>Upcoming</Link>
+          <Link href="/contact" className={styles.mLink} onClick={() => setOpen(false)}>Contasdfasfdact</Link>
         </nav>
       </div>
 

@@ -166,32 +166,3 @@ export default function GalleryPage() {
 		</main>
 	);
 }
-
-function IconHeart() {
-	return (
-		<svg
-			aria-hidden="true"
-			width="18"
-			height="18"
-			viewBox="0 0 24 24"
-			fill="currentColor"
-			style={{ verticalAlign: "text-bottom" }}
-		>
-			<path d="M12 21s-6.716-4.35-9.364-7C.988 12.35 1 9.5 3 7.5a5 5 0 017 0L12 9l2-1.5a5 5 0 017 7c-2.648 2.65-9 6.5-9 6.5z" />
-		</svg>
-	);
-}
-function IconComment() {
-	return (
-		<svg
-			aria-hidden="true"
-			width="18"
-			height="18"
-			viewBox="0 0 24 24"
-			fill="currentColor"
-			style={{ verticalAlign: "text-bottom" }}
-		>
-			<path d="M20 2H4a2 2 0 00-2 2v14l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z" />
-		</svg>
-	);
-}

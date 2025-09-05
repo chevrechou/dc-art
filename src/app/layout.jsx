@@ -27,7 +27,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={cormorant.className}>
-      <body>
+      <body suppressHydrationWarning>
          <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

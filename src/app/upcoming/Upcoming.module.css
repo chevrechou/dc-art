@@ -1,0 +1,29 @@
+.page {
+  padding-top: 120px; /* leave space for sticky header */
+  margin: 0 auto;
+  max-width: 1100px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.subhead {
+  margin: 0.75rem auto 0;
+  max-width: 720px;
+  color: #ddd;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "src": "/flash/skull-rose.jpg",
+    "alt": "Skull with rose",
+    "size": "medium",
+    "style": "blackgrey",
+    "healed": false,
+    "available": true
+  },
+  {
+    "src": "/flash/koi-sleeve.jpg",
+    "alt": "Koi half sleeve",
+    "size": "large",
+    "style": "color",
+    "healed": false,
+    "available": true
+  },
+  {
+    "src": "/flash/owl-forearm.png",
+    "alt": "Owl forearm",
+    "size": "small",
+    "style": "blackgrey",
+    "healed": true,
+    "available": false
+  }
+]
