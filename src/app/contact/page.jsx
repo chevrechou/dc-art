@@ -18,12 +18,12 @@ import {
 import DiagonalBG from "../components/DiagonalBG";
 
 const STUDIO = {
-	name: "DC Art - Derek Calkins",
-	phone: "+1-702-555-0123",
-	email: "booking@dcartstudio.com",
-	ig: "https://instagram.com/dc_art_collective",
-	address: "123 Ink Ave, Las Vegas, NV 89101",
-	maps: "https://maps.google.com/?q=123+Ink+Ave,+Las+Vegas,+NV+89101",
+  name: "DC Art - Derek Calkins",
+  phone: "+1-702-555-0123",
+  email: "booking@dcartstudio.com",
+  ig: "https://instagram.com/dc_art_collective",
+  address: "6910 S Rainbow Blvd #107, Las Vegas, NV 89118",
+  maps: "https://maps.app.goo.gl/vEWYfu8qQsFz8xw5A",
 };
 
 export default function ContactPage() {

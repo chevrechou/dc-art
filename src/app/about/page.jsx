@@ -88,7 +88,7 @@ export default function About() {
             key={i}
             className={styles.bgTile}
             style={{ backgroundImage: `url(${src})` }}
-            data-speed={i === 0 ? 0.12 : i === 1 ? 0.18 : 0.25} // stronger speeds
+            data-speed={i === 0 ? 0.12 : i === 1 ? 0.15 : 0.19} // stronger speeds
           />
         ))}
         <div className={styles.bgVignette} />
@@ -151,7 +151,7 @@ export default function About() {
       <section className={styles.rows}>
         {/* Row 1: image | text */}
         <div className={styles.row}>
-          <div className={styles.rowImage} data-speed="0.12">
+          <div className={styles.rowImage} data-speed="0.1">
             <img src="/images/dc-profile-2.jpg" alt="Studio or work in progress" />
           </div>
           <div className={styles.rowText}>
@@ -200,14 +200,14 @@ export default function About() {
               steps because healed results are part of the art.
             </p>
           </div>
-          <div className={styles.rowImage} data-speed="0.1">
+          <div className={styles.rowImage} data-speed="0.08">
             <img src="/images/dc-profile-3.jpg" alt="Design sketch or equipment" />
           </div>
         </div>
 
         {/* Row 3: Conventions and Awards */}
         <div className={styles.row}>
-          <div className={styles.rowImage} data-speed="0.05">
+          <div className={styles.rowImage} data-speed="0.03">
             <img src="/images/dc-profile-4.jpg" alt="Tattoo convention floor or award moments" />
           </div>
           <div className={styles.rowText}>
