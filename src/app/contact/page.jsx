@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Script from "next/script";
 import styles from "./Contact.module.css";
 
@@ -10,9 +10,10 @@ import {
 	faEnvelope,
 	faMapMarkerAlt,
 	faCopy,
-	faTrash,
-	faLink,
 	faCircleInfo,
+	faListCheck,
+	faPaperclip,
+	faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import DiagonalBG from "../components/DiagonalBG";
 
@@ -34,11 +35,7 @@ export default function ContactPage() {
 	const [style, setStyle] = useState("Black & Grey");
 	const [description, setDescription] = useState("");
 	const [refs, setRefs] = useState("");
-	const [images, setImages] = useState([]); // {file, url}
 	const [copied, setCopied] = useState(false);
-
-	const fileInputRef = useRef(null);
-	const MAX_FILES = 5;
 
 	// message preview
 	const subject = useMemo(() => {
@@ -59,12 +56,11 @@ export default function ContactPage() {
 			style ? `Style: ${style}` : null,
 			description ? `Description: ${description}` : null,
 			refs ? `Reference links: ${refs}` : null,
-			images.length ? `Images to attach: ${images.map((x) => x.file.name).join(", ")}` : null,
 			"",
 			"Thank you",
 		].filter(Boolean);
 		return lines.join("\n");
-	}, [fullName, replyEmail, placement, budget, style, description, refs, images]);
+	}, [fullName, replyEmail, placement, budget, style, description, refs]);
 
 	const bodyURI = encodeURIComponent(body);
 	const subjURI = encodeURIComponent(subject);
@@ -79,37 +75,28 @@ export default function ContactPage() {
 		} catch { }
 	};
 
-	// local previews only
-	const onFiles = (filesList) => {
-		const files = Array.from(filesList || []);
-		if (!files.length) return;
-		const next = [...images];
-		for (const f of files) {
-			if (!f.type.startsWith("image/")) continue;
-			if (next.length >= MAX_FILES) break;
-			next.push({ file: f, url: URL.createObjectURL(f) });
-		}
-		setImages(next);
-	};
-
-	const removeImage = (idx) => {
-		setImages((prev) => {
-			const copy = [...prev];
-			const [removed] = copy.splice(idx, 1);
-			if (removed?.url) URL.revokeObjectURL(removed.url);
-			return copy;
-		});
-	};
+	const requiredOk = () =>
+		fullName.trim() && replyEmail.trim() && placement.trim() && description.trim();
 
 	return (
 		<main className={styles.page}>
 			<DiagonalBG />
+
 			{/* Hero */}
 			<section className={styles.hero}>
 				<h1 className={styles.title}>Contact</h1>
-				<p className={styles.kicker}>
-					Start your project. Fill the form and open your email or text app. Attach reference images there.
+				<p className={styles.kicker}>Let's work on your next project</p>
+				<p className={styles.compel}>
+					Every tattoo I take on is a chance to bring years of practice and passion to life.
+					I look for clients who want to collaborate but also trust me with the creative freedom
+					to do my best work.
 				</p>
+				<p className={styles.compel}>
+					My proudest moments are when I create pieces I’d be honored to wear myself —
+					work that feels timeless, personal, and powerful.
+				</p>
+
+
 				<div className={styles.actions}>
 					<a className={styles.action} href={`tel:${STUDIO.phone}`}>
 						<FontAwesomeIcon icon={faPhone} /> Call
@@ -133,7 +120,6 @@ export default function ContactPage() {
 					{/* Row 1: Video */}
 					<div className={styles.videoCard}>
 						<div className={styles.videoFrame}>
-							{/* Replace sources with your actual video files */}
 							<video
 								className={styles.video}
 								autoPlay
@@ -148,15 +134,12 @@ export default function ContactPage() {
 								Your browser does not support the video tag.
 							</video>
 						</div>
-						<div className={styles.videoCaption}>
-							Tattoo session in progress.
-						</div>
+						<div className={styles.videoCaption}>Tattoo session in progress.</div>
 					</div>
 
 					{/* Row 2: Instagram embed */}
 					<div className={styles.instaCard}>
 						<h3 className={styles.embedTitle}>Latest on Instagram</h3>
-
 						<blockquote
 							className="instagram-media"
 							data-instgrm-permalink="https://www.instagram.com/dc_art_collective/?utm_source=ig_embed&amp;utm_campaign=loading"
@@ -165,8 +148,7 @@ export default function ContactPage() {
 								background: "#FFF",
 								border: 0,
 								borderRadius: "12px",
-								boxShadow:
-									"0 0 1px 0 rgba(0,0,0,0.5), 0 8px 24px 0 rgba(0,0,0,0.18)",
+								boxShadow: "0 0 1px 0 rgba(0,0,0,0.5), 0 8px 24px 0 rgba(0,0,0,0.18)",
 								margin: "0 auto",
 								padding: 0,
 								maxWidth: "540px",
@@ -189,10 +171,26 @@ export default function ContactPage() {
 					<section className={styles.formWrap} aria-label="Tattoo request">
 						<h2 className={styles.h2}>Tattoo Request</h2>
 
-						{/* Clear notice above uploads */}
+						{/* Expanded instructions */}
+						<div className={styles.notice} role="note">
+							<FontAwesomeIcon icon={faListCheck} /> How to submit
+							<ol style={{ margin: "0.5rem 0 0 1.25rem" }}>
+								<li>Fill out the form so we can prep your message.</li>
+								<li>
+									Click <strong>Open Mail</strong> or <strong>Open Texts</strong>.
+									Your subject and body will auto fill.
+								</li>
+								<li>
+									<strong>Attach your reference images</strong> in the email or text before sending{" "}
+									<FontAwesomeIcon icon={faPaperclip} />.
+								</li>
+								<li>Send your message. You’ll get a reply with next steps and scheduling.</li>
+							</ol>
+						</div>
+
 						<div className={styles.notice}>
 							<FontAwesomeIcon icon={faCircleInfo} />
-							Please attach your reference images in the email or text after you click Open Mail or Open Texts.
+							Reference images cannot be uploaded here. Please attach them directly in your email or text.
 						</div>
 
 						<form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -204,6 +202,7 @@ export default function ContactPage() {
 										value={fullName}
 										onChange={(e) => setFullName(e.target.value)}
 										placeholder="Jane Doe"
+										aria-required="true"
 									/>
 								</label>
 								<label className={styles.label}>
@@ -214,6 +213,7 @@ export default function ContactPage() {
 										value={replyEmail}
 										onChange={(e) => setReplyEmail(e.target.value)}
 										placeholder="you@example.com"
+										aria-required="true"
 									/>
 								</label>
 							</div>
@@ -226,6 +226,7 @@ export default function ContactPage() {
 										value={placement}
 										onChange={(e) => setPlacement(e.target.value)}
 										placeholder="Right forearm outer"
+										aria-required="true"
 									/>
 								</label>
 								<label className={styles.label}>
@@ -271,6 +272,7 @@ export default function ContactPage() {
 									value={description}
 									onChange={(e) => setDescription(e.target.value)}
 									placeholder="Brief concept, must include elements, cover up details if any"
+									aria-required="true"
 								/>
 							</label>
 						</form>
@@ -290,27 +292,43 @@ export default function ContactPage() {
 									</button>
 
 									{copied && (
-										<span
-											className={styles.popover}
-											role="status"
-											aria-live="polite"
-										>
+										<span className={styles.popover} role="status" aria-live="polite">
 											Copied
 											<i className={styles.popoverArrow} />
 										</span>
 									)}
 								</div>
 
-								<a className={styles.secondaryBtn} href={mailtoHref}>
+								<a
+									className={styles.secondaryBtn}
+									href={requiredOk() ? mailtoHref : undefined}
+									onClick={(e) => {
+										if (!requiredOk()) {
+											e.preventDefault();
+											alert("Please complete Name, Email, Placement, and Description before opening your email.");
+										}
+									}}
+								>
 									<FontAwesomeIcon icon={faEnvelope} /> Open Mail
 								</a>
-								<a className={styles.secondaryBtn} href={smsHref}>
+
+								<a
+									className={styles.secondaryBtn}
+									href={requiredOk() ? smsHref : undefined}
+									onClick={(e) => {
+										if (!requiredOk()) {
+											e.preventDefault();
+											alert("Please complete Name, Email, Placement, and Description before opening your texts.");
+										}
+									}}
+								>
 									<FontAwesomeIcon icon={faPhone} /> Open Texts
 								</a>
 							</div>
 
 							<p className={styles.disclaimer}>
-								Attach your reference images in the email or text before you send it. Mailto and SMS links do not include files automatically.
+								Attach your reference images in the email or text before you send it.
+								Mailto and SMS links cannot include files automatically.
 							</p>
 						</div>
 					</section>

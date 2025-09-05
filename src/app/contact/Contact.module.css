@@ -6,6 +6,7 @@
     color: #ffffff;
     background: none;
     /* transparent over site bg */
+    text-shadow: 0 10px 8px rgb(0, 0, 0);
 }
 
 /* Hero */
@@ -23,10 +24,22 @@
 }
 
 .kicker {
-    margin: 0 auto 14px;
+    margin: 0 auto 10px;
     max-width: 700px;
     color: #e5e5e5;
-    font-size: 1.05rem;
+    font-size: 2rem;
+}
+
+/* New: compelling description under hero */
+.compel {
+    margin: 6px auto;
+    max-width: 880px;
+    color: #f1f1f1;
+    font-size: 1.7rem;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    text-shadow: 0 10px 8px rgb(0, 0, 0);
+    text-align: left;
 }
 
 /* Top actions */
@@ -35,7 +48,8 @@
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 4rem;
+
 }
 
 .action {
@@ -95,13 +109,12 @@
     backdrop-filter: blur(8px);
     padding: 2rem;
     text-align: center;
-
     max-width: 650px;
-    /* ✅ limit width */
+    /* limit width */
     margin: 0 auto;
-    /* ✅ center horizontally */
+    /* center horizontally */
     width: 100%;
-    /* ✅ still responsive */
+    /* still responsive */
 }
 
 /* Video */
@@ -125,7 +138,7 @@
 
 .videoCaption {
     margin-top: 6px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #f0f0f0;
 }
 
@@ -140,7 +153,7 @@
 .instaNote {
     margin: 10px 0 0;
     color: #e5e5e5;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .instaCard blockquote,
@@ -149,12 +162,11 @@
     max-width: none !important;
 }
 
-/* Form */
+/* Form card */
 .formWrap {
-    padding: 20px;
-
-    padding-bottom: 40px;
+    padding: 20px 20px 40px;
     border-radius: 18px;
+    text-align: left;
 }
 
 .h2 {
@@ -164,7 +176,40 @@
     color: #fff;
 }
 
-/* Inputs */
+/* New: instruction notices */
+.notice {
+    align-items: flex-start;
+    gap: 10px;
+    margin: 10px 0 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f3f3f3;
+    line-height: 1.55;
+    font-size: 1.2rem
+}
+
+.notice svg{
+    margin-right: 1rem;
+    font-size:1.5rem;
+}
+.notice ol svg{
+    font-size: 1.1rem;
+}
+
+/* Form layout */
+.form {
+    display: grid;
+    gap: 6px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 .label {
     display: grid;
     gap: 6px;
@@ -201,7 +246,6 @@
 .textarea {
     resize: vertical;
     min-height: 110px;
-
 }
 
 .select {
@@ -266,7 +310,6 @@
     margin-top: 10px;
 }
 
-
 /* Buttons */
 .primaryBtn,
 .secondaryBtn {
@@ -282,8 +325,6 @@
     cursor: pointer;
     transition: transform .1s, background .2s, border-color .2s;
     margin-bottom: 1rem;
-
-
 }
 
 .primaryBtn {
@@ -302,6 +343,55 @@
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.22);
     margin-right: 1rem;
+}
+
+/* New: output actions and copy tooltip */
+.outputActions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 12px;
+}
+
+.copyWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.popover {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 8px);
+    background: #111;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.popoverArrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    bottom: -6px;
+    width: 10px;
+    height: 10px;
+    background: #111;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Links inside notes */
+.link {
+    color: #ffd494;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 /* Responsive breakpoints */
@@ -326,9 +416,22 @@
 
 @media (max-width: 640px) {
     .page {
-        /* padding: 88px 14px 28px; */
         margin: 0;
-        margin-bottom: 3rem;
+        margin: 0 2rem 3rem;
+  
+    }
+    .kicker {
+        font-size: 1.6rem;
+    }
+    .actions {
+        margin-top: 2rem;
+    }
+    .actions a{
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+    .compel {
+        font-size: 1.3rem;
     }
 
     .row {
@@ -353,10 +456,8 @@
     .instaCard,
     .formWrap {
         padding: 1rem;
-        /* max-width: 95%; */
         margin: 0 auto;
         width: auto !important;
-
     }
 
     .videoFrame {

@@ -4,6 +4,9 @@ body {
 	color-scheme: dark;
 	height: 100%;
 	width: 100%;
+	overflow-x: hidden;
+	left: -4px;
+	position: absolute
 }
 
 /* Default header height var, used to offset fixed header site-wide */
@@ -11,7 +14,7 @@ body {
 	--header-h: 72px;
 }
 
-main{
+main {
 	padding: 0;
 }
 
