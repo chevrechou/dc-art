@@ -15,7 +15,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 22vw; /* stripe width on desktop */
-  gap: 2vw;
+  gap: 2px;
   transform: rotate(-12deg) scale(1.1); /* diagonal tilt */
   transform-origin: center;
   will-change: transform;

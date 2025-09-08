@@ -1,8 +1,13 @@
 .page {
-	padding: 116px 16px 40px;
+	padding: 116px 40px 40px;
 	/* room for fixed header */
-	max-width: 1400px;
+	/* max-width: 1400px; */
 	margin: 0 auto;
+	color: #ffffff;
+	text-shadow: 0 10px 8px rgb(0, 0, 0);
+	background-color: #222222;
+
+
 }
 
 /* header with filters and actions */
@@ -87,7 +92,7 @@
 .grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 12px;
+	gap: 16px;
 }
 
 .flashSection {

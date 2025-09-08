@@ -1,10 +1,13 @@
 /* Page wrapper */
 .page {
     padding-top: 116px;
+    /* background-color: #222222; */
+
     /* room for fixed header */
     margin: 0rem 2rem 0;
     color: #ffffff;
-    background: none;
+    /* background: transparent; */
+    /* was none, keep transparent */
     /* transparent over site bg */
     text-shadow: 0 10px 8px rgb(0, 0, 0);
 }

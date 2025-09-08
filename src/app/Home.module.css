@@ -2,6 +2,8 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
+  background-color: #222222;
+
 }
 
 /* Desktop: 5 columns, hide the 6th */
