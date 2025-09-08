@@ -278,6 +278,10 @@
 
 /* Responsive stack on mobile: calendar above details */
 @media (max-width: 900px) {
+	.title {
+		text-align: center;
+	}
+
 	.monthView {
 		flex-direction: column;
 		gap: 12px;

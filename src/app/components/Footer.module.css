@@ -3,7 +3,7 @@
 	isolation: isolate;
 	z-index: 10;
 	border-top: 1px solid #e5e5e5;
-	background: linear-gradient(#f2f1f1, #a7a7a7);
+	background: linear-gradient(#f7f7f7, #d5d3d3);
 	padding-top: 1.8rem;
 	color: black;
 }
@@ -22,7 +22,7 @@
 /* Typography and lists */
 .h4 {
 	font-size: 1.05rem;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	margin-bottom: 0.75rem;
