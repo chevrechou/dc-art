@@ -2,16 +2,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Gallery.module.css";
 
+/* =========
+	 Portfolio (existing gallery)
+	 ========= */
 const RAW = Array.from({ length: 15 }, (_, i) => {
 	const idx = i + 1;
-	const isColor = idx % 3 === 0; // simple sample tagging
+	const isColor = idx % 3 === 0;
 	return {
-		id: idx,
+		id: `w-${idx}`,
 		src: `/images/tattoo-${idx}.jpg`,
 		alt: `Tattoo ${idx}`,
 		kind: isColor ? "color" : "blackgrey",
-		likes: 120 + idx * 7,
-		comments: 6 + (idx % 5),
 	};
 });
 
@@ -21,34 +22,83 @@ const FILTERS = [
 	{ key: "color", label: "Color" },
 	{ key: "popculture", label: "Pop Culture" },
 	{ key: "portrait", label: "Portrait" },
-
-
 ];
 
+/* =========
+	 Flash (new section)
+	 Images live in /public/flash
+	 Example files: /public/flash/flash-1.jpg ... flash-12.jpg
+	 ========= */
+const FLASH = Array.from({ length: 12 }, (_, i) => {
+	const idx = i + 1;
+	const stylesPool = ["linework", "color", "anime", "surreal"];
+	const style = stylesPool[idx % stylesPool.length];
+	const available = idx % 5 !== 0; // every 5th is “claimed” just for demo
+	return {
+		id: `f-${idx}`,
+		// src: `/flash/flash-${idx}.jpg`,
+		src: `/images/tattoo-${idx}.jpg`,
+		alt: `Flash design ${idx}`,
+		style,
+		available,
+	};
+});
+
+const FLASH_STYLE = [
+	{ key: "all", label: "All" },
+	{ key: "linework", label: "Linework" },
+	{ key: "color", label: "Color" },
+	{ key: "anime", label: "Anime" },
+	{ key: "surreal", label: "Surreal" },
+];
+
+
 export default function GalleryPage() {
-	const [idx, setIdx] = useState(null); // lightbox index in filtered list
+	/* ---- portfolio state ---- */
+	const [idx, setIdx] = useState(null); // index within active list
+	const [activeSet, setActiveSet] = useState(null); // 'work' | 'flash' | null (for lightbox source)
 	const [filter, setFilter] = useState("all");
 	const [shuffled, setShuffled] = useState(false);
 
-	const data = useMemo(() => {
-		const base = filter === "all" ? RAW : RAW.filter(x => x.kind === filter);
+	/* ---- flash state ---- */
+	const [flashStyle, setFlashStyle] = useState("all");
+	const [showOnlyAvailable, setShowOnlyAvailable] = useState(true);
+
+	/* ---- derived lists ---- */
+	const workData = useMemo(() => {
+		const base = filter === "all" ? RAW : RAW.filter((x) => x.kind === filter);
 		if (!shuffled) return base;
-		// lightweight deterministic shuffle for variety
-		return [...base].sort((a, b) => (a.id * 37) % 17 - (b.id * 37) % 17);
+		return [...base].sort((a, b) => ((a.id.length * 37) % 17) - ((b.id.length * 37) % 17));
 	}, [filter, shuffled]);
 
-	const open = (i) => setIdx(i);
-	const close = () => setIdx(null);
+	const flashData = useMemo(() => {
+		return FLASH.filter((f) => {
+			const styleOk = flashStyle === "all" || f.style === flashStyle;
+			const availOk = !showOnlyAvailable || f.available;
+			return styleOk && availOk;
+		});
+	}, [flashStyle, showOnlyAvailable]);
+
+	/* ---- lightbox helpers ---- */
+	const openFrom = (setName, i) => {
+		setActiveSet(setName);
+		setIdx(i);
+	};
+	const close = () => {
+		setIdx(null);
+		setActiveSet(null);
+	};
+	const activeList = activeSet === "flash" ? flashData : workData;
 	const prev = (e) => {
 		e?.stopPropagation?.();
-		setIdx((i) => (i === 0 ? data.length - 1 : i - 1));
+		setIdx((i) => (!activeList.length ? null : i === 0 ? activeList.length - 1 : i - 1));
 	};
 	const next = (e) => {
 		e?.stopPropagation?.();
-		setIdx((i) => (i === data.length - 1 ? 0 : i + 1));
+		setIdx((i) => (!activeList.length ? null : i === activeList.length - 1 ? 0 : i + 1));
 	};
 
-	// Keyboard support
+	/* ---- keyboard support ---- */
 	useEffect(() => {
 		const onKey = (e) => {
 			if (e.key === "Escape") close();
@@ -57,34 +107,48 @@ export default function GalleryPage() {
 		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
-	}, [idx, data.length]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [idx, activeList.length]);
 
-	// Staggered reveal on scroll
-	const gridRef = useRef(null);
+	/* ---- reveal on scroll (portfolio section) ---- */
+	const gridRef1 = useRef(null);
 	useEffect(() => {
-		const el = gridRef.current;
+		const el = gridRef1.current;
 		if (!el) return;
 		const tiles = Array.from(el.querySelectorAll(`.${styles.tile}`));
 		const io = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) entry.target.classList.add(styles.visible);
-				});
-			},
+			(entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add(styles.visible)),
 			{ rootMargin: "80px 0px", threshold: 0.1 }
 		);
 		tiles.forEach((t) => io.observe(t));
 		return () => io.disconnect();
-	}, [data, filter, shuffled]);
+	}, [workData]);
+
+	/* ---- reveal on scroll (flash section) ---- */
+	const gridRef2 = useRef(null);
+	useEffect(() => {
+		const el = gridRef2.current;
+		if (!el) return;
+		const tiles = Array.from(el.querySelectorAll(`.${styles.tile}`));
+		const io = new IntersectionObserver(
+			(entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add(styles.visible)),
+			{ rootMargin: "80px 0px", threshold: 0.1 }
+		);
+		tiles.forEach((t) => io.observe(t));
+		return () => io.disconnect();
+	}, [flashData]);
 
 	return (
 		<main className={styles.page}>
+			{/* ===== Portfolio (existing) ===== */}
 			<header className={styles.header}>
 				<h1 className={styles.title}>Gallery</h1>
-
+				<p className={styles.kicker}>
+					A curated collection of my work — from large-scale realism to vibrant pop culture and anime pieces.
+				</p>
 				<div className={styles.actions}>
 					<div className={styles.filters} role="tablist" aria-label="Filter gallery">
-						{FILTERS.map(f => (
+						{FILTERS.map((f) => (
 							<button
 								key={f.key}
 								role="tab"
@@ -100,7 +164,7 @@ export default function GalleryPage() {
 					<div className={styles.rightActions}>
 						<button
 							className={styles.pill}
-							onClick={() => setShuffled(s => !s)}
+							onClick={() => setShuffled((s) => !s)}
 							aria-pressed={shuffled}
 							title="Shuffle order"
 						>
@@ -110,33 +174,84 @@ export default function GalleryPage() {
 				</div>
 			</header>
 
-			<section
-				ref={gridRef}
-				className={styles.grid}
-				aria-label="Instagram style gallery"
-			>
-				{data.map((img, i) => (
+			<section ref={gridRef1} className={styles.grid} aria-label="Portfolio gallery">
+				{workData.map((img, i) => (
 					<button
 						key={img.id}
 						className={styles.tile}
-						onClick={() => open(i)}
+						onClick={() => openFrom("work", i)}
 						aria-label={`Open ${img.alt}`}
 					>
 						<img src={img.src} alt={img.alt} loading="lazy" />
-						<span className={styles.badge}>{img.kind === "color" ? "Color" : "B and G"}</span>
-
+						<span className={styles.badge}>{img.kind === "color" ? "Color" : "B & G"}</span>
 					</button>
 				))}
 			</section>
 
-			{idx !== null && (
-				<div
-					className={styles.lightbox}
-					onClick={close}
-					role="dialog"
-					aria-modal="true"
-					aria-label="Image viewer"
-				>
+			{/* ===== Flash (new) ===== */}
+			<section className={styles.flashSection} aria-label="Pre-Designed Flash" id="flash">
+				<header className={styles.header}>
+					<h2 className={styles.flashTitle}>Pre-Designed Flash</h2>
+					<p className={styles.kicker}>
+						One-off original designs—first come, first served. DM or email to claim.
+					</p>
+
+					<div className={styles.actions}>
+						<div className={styles.filters} aria-label="Flash style filters">
+							{FLASH_STYLE.map((f) => (
+								<button
+									key={f.key}
+									className={`${styles.pill} ${flashStyle === f.key ? styles.pillActive : ""}`}
+									onClick={() => setFlashStyle(f.key)}
+								>
+									{f.label}
+								</button>
+							))}
+						</div>
+
+
+						<div className={styles.rightActions}>
+							<label className={styles.toggleLabel}>
+								<input
+									type="checkbox"
+									checked={showOnlyAvailable}
+									onChange={(e) => setShowOnlyAvailable(e.target.checked)}
+								/>
+								Show only available
+							</label>
+						</div>
+					</div>
+				</header>
+
+				<section ref={gridRef2} className={styles.grid} aria-label="Flash gallery">
+					{flashData.length === 0 ? (
+						<div className={styles.empty}>No flash matches those filters—try another combo.</div>
+					) : (
+						flashData.map((img, i) => (
+							<button
+								key={img.id}
+								className={`${styles.tile} ${!img.available ? styles.tileDisabled : ""}`}
+								onClick={() => openFrom("flash", i)}
+								aria-label={`Open ${img.alt}`}
+								disabled={!img.available}
+								title={!img.available ? "Claimed" : "Available"}
+							>
+								<img src={img.src} alt={img.alt} loading="lazy" />
+								<span className={styles.badgeRow}>
+									<span className={styles.badge}>{img.style}</span>
+									<span className={`${styles.badge} ${img.available ? styles.badgeOk : styles.badgeMuted}`}>
+										{img.available ? "Available" : "Claimed"}
+									</span>
+								</span>
+							</button>
+						))
+					)}
+				</section>
+			</section>
+
+			{/* ===== Shared Lightbox ===== */}
+			{idx !== null && activeList[idx] && (
+				<div className={styles.lightbox} onClick={close} role="dialog" aria-modal="true" aria-label="Image viewer">
 					<button className={styles.close} aria-label="Close" onClick={close}>
 						×
 					</button>
@@ -146,15 +261,13 @@ export default function GalleryPage() {
 					</button>
 
 					<figure className={styles.figure} onClick={(e) => e.stopPropagation()}>
-						<img
-							className={styles.lbImg}
-							src={data[idx].src}
-							alt={data[idx].alt}
-						/>
+						<img className={styles.lbImg} src={activeList[idx].src} alt={activeList[idx].alt} />
 						<figcaption className={styles.caption}>
-							<span>{data[idx].alt}</span>
+							<span>{activeList[idx].alt}</span>
 							<span className={styles.sep} />
-							<span>{idx + 1} of {data.length}</span>
+							<span>
+								{idx + 1} of {activeList.length}
+							</span>
 						</figcaption>
 					</figure>
 
