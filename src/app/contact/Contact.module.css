@@ -493,15 +493,15 @@
 
     .video {
         display: block;
-        width: 300px;
+        width: 290px;
         height: auto;
         /* avoid stretching in iOS Safari */
         object-fit: cover;
     }
 
     .instaCard iframe {
-        width: 300px !important;
-        min-width: 300px !important;
+        width: 290px !important;
+        min-width: 290px !important;
         margin: 0 auto !important;
     }
 }
