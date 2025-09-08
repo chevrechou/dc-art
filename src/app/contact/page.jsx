@@ -152,6 +152,7 @@ export default function ContactPage() {
 								padding: 0,
 								maxWidth: "540px",
 								width: "100%",
+								minWidth: "none",
 							}}
 						/>
 						<Script src="//www.instagram.com/embed.js" strategy="lazyOnload" />
