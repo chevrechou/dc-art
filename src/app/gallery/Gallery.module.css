@@ -285,7 +285,7 @@
 /* Responsive columns */
 @media (max-width: 1024px) {
 	.grid {
-		gap: 5px;
+		gap: 10px;
 	}
 }
 
