@@ -5,6 +5,9 @@ import styles from "./ConventionCalendar.module.css";
 export default function ConventionCalendar({ src = "/events.json" }) {
 	// prevent hydration mismatch with dates
 	const [mounted, setMounted] = useState(false);
+	const [monthDir, setMonthDir] = useState(0);   // -1 prev, 1 next, 0 idle
+	const [swapKey, setSwapKey] = useState(0);     // bumps to retrigger card fade
+
 	useEffect(() => setMounted(true), []);
 
 	const [events, setEvents] = useState([]);
@@ -87,10 +90,14 @@ export default function ConventionCalendar({ src = "/events.json" }) {
 		}
 	}, [month, monthEvents, selected]);
 
-	const prevMonth = () =>
+	const prevMonth = () => {
+		setMonthDir(-1);
 		setMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1));
-	const nextMonth = () =>
+	};
+	const nextMonth = () => {
+		setMonthDir(1);
 		setMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1));
+	};
 
 	// compute arrow enabled state for the detail card
 	const visibleList = monthEvents;
@@ -115,7 +122,10 @@ export default function ConventionCalendar({ src = "/events.json" }) {
 						<button className={styles.nav} onClick={prevMonth} aria-label="Previous month">
 							‹
 						</button>
-						<div className={styles.monthLabel}>
+						<div
+							className={`${styles.monthLabel} ${monthDir === 1 ? styles.slideLeft : monthDir === -1 ? styles.slideRight : ""
+								}`}
+						>
 							{month.toLocaleString("en-US", { month: "long", year: "numeric" })}
 						</div>
 						<button className={styles.nav} onClick={nextMonth} aria-label="Next month">
@@ -123,7 +133,11 @@ export default function ConventionCalendar({ src = "/events.json" }) {
 						</button>
 					</div>
 
-					<div className={styles.calendar}>
+					<div
+						className={`${styles.calendar} ${monthDir === 1 ? styles.slideLeft : monthDir === -1 ? styles.slideRight : ""
+							}`}
+						onAnimationEnd={() => setMonthDir(0)}
+					>
 						{["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
 							<div key={d} className={`${styles.cell} ${styles.dow}`}>
 								{d}
@@ -148,7 +162,10 @@ export default function ConventionCalendar({ src = "/events.json" }) {
 											isSelectedDay ? styles.daySelected : "",
 										].join(" ")}
 										onClick={() => {
-											if (dayEvents.length) setSelected(dayEvents[0]);
+											if (dayEvents.length) {
+												setSelected(dayEvents[0]);
+												setSwapKey((k) => k + 1);
+											}
 										}}
 										aria-label={`${fmtDayLabel(day)}${dayEvents.length ? `, ${dayEvents.length} event` : ""
 											}`}
@@ -185,6 +202,7 @@ export default function ConventionCalendar({ src = "/events.json" }) {
 						</div>
 					) : selected ? (
 						<EventCard
+							key={`${selected?.id ?? "none"}-${swapKey}`}
 							ev={selected}
 							onPrev={() => cycleEvent(-1)}
 							onNext={() => cycleEvent(1)}

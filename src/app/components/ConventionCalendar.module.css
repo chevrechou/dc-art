@@ -13,13 +13,13 @@
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	margin-bottom: 0.75rem;
+	margin-bottom: 2.1rem;
 	justify-content: center;
 }
 
 .title {
 	margin: 0;
-	font-size: 1.6rem;
+	font-size: 1.8rem;
 	font-weight: 800;
 	letter-spacing: 0.02em;
 }
@@ -304,5 +304,69 @@
 
 	.dayNum {
 		font-size: 0.9rem;
+	}
+}
+
+/* Minimal transitions */
+.slideLeft {
+	animation: calSlideLeft 1000ms ease both;
+}
+
+.slideRight {
+	animation: calSlideRight 1000ms ease both;
+}
+
+@keyframes calSlideLeft {
+	from {
+		transform: translateX(16px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes calSlideRight {
+	from {
+		transform: translateX(-16px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+/* Calendar grid & card get a gentle fade/slide */
+.calendar {
+	will-change: transform, opacity;
+}
+
+.card {
+	animation: cardSwap 1200ms ease both;
+}
+
+@keyframes cardSwap {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+
+	.slideLeft,
+	.slideRight,
+	.card {
+		animation: none !important;
 	}
 }
