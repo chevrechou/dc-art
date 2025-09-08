@@ -102,7 +102,7 @@ export default function Header() {
           <Link href="/about" className={styles.mLink} onClick={() => setOpen(false)}>About</Link>
           <Link href="/gallery" className={styles.mLink} onClick={() => setOpen(false)}>Gallery</Link>
           <Link href="/upcoming" className={styles.mLink} onClick={() => setOpen(false)}>Upcoming</Link>
-          <Link href="/contact" className={styles.mLink} onClick={() => setOpen(false)}>Contasdfasfdact</Link>
+          <Link href="/contact" className={styles.mLink} onClick={() => setOpen(false)}>Contact</Link>
         </nav>
       </div>
 
