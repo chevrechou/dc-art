@@ -158,14 +158,14 @@
 
   .name {
     font-size: 2.1rem;
-    opacity: 1;
-    animation: none;
+    opacity: 0;
+    /* animation: none; */
     text-shadow: 0 10px 8px rgb(0, 0, 0)
   }
 
   .tag {
-    opacity: 1;
-    animation: none;
+    opacity: 0;
+    /* animation: none; */
     color: #f0f0f0;
     text-shadow: 0 10px 8px rgb(0, 0, 0);
     font-size: 1.25rem;
