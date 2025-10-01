@@ -1,60 +1,80 @@
 "use client";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import styles from "./About.module.css";
 
-const bgImages = [
-  "/images/tattoo-1.jpg",
-  "/images/tattoo-2.jpg",
-  "/images/tattoo-3.jpg",
-];
+const bgImages = ["/images/tattoo-1.jpg", "/images/tattoo-2.jpg", "/images/tattoo-3.jpg"];
 
 export default function About() {
+  const reduce = useReducedMotion();
+  const [parallaxEnabled, setParallaxEnabled] = useState(false);
+
+  // Smooth page + section variants
+  const page = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        duration: 0.45,
+        ease: [0.22, 1, 0.36, 1],
+        when: "beforeChildren",
+        staggerChildren: 0.12
+      }
+    }
+  };
+
+  const up = {
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { duration: 2.5, ease: [0.32, 1, 0.56, 1] } }
+  };
+
+  const fade = {
+    hidden: { opacity: 0.3 },
+    show: { opacity: 1, transition: { duration: 1.3, ease: "easeOut" } }
+  };
+
+  // Parallax on scroll (unchanged, but gated)
   useEffect(() => {
+    if (reduce) return; // respect reduced motion
+
     let ticking = false;
     let enabled = false;
     let tiles = [];
     let rows = [];
 
     const collect = () => {
-      // Grab all nodes currently in the DOM
       tiles = Array.from(document.querySelectorAll(`.${styles.bgTile}`));
       rows = Array.from(document.querySelectorAll(`.${styles.rowImage}`));
     };
 
     const resetTransforms = () => {
-      [...tiles, ...rows].forEach((el) => {
-        el.style.transform = "";
-      });
+      [...tiles, ...rows].forEach((el) => (el.style.transform = ""));
     };
 
     const evaluate = () => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const isMobile = window.matchMedia("(max-width: 960px)").matches;
       enabled = !(prefersReduced || isMobile);
+      setParallaxEnabled(enabled);
       if (!enabled) resetTransforms();
     };
 
     const onScroll = () => {
       if (!enabled || ticking) return;
       ticking = true;
-
       requestAnimationFrame(() => {
         const y = window.scrollY || 0;
-
-        // Background tiles — gentle, but visible
         tiles.forEach((el) => {
-          const speed = parseFloat(el.dataset.speed || "2.5"); // 0.04..0.08 feels good
+          const speed = parseFloat(el.dataset.speed || "2.5");
           const offset = -y * speed;
           el.style.transform = `translate3d(0, ${offset}px, 0) scale(1.02)`;
         });
-
-        // Row images — subtle
         rows.forEach((el) => {
-          const speed = parseFloat(el.dataset.speed || "1.3"); // 0.015..0.03
+          const speed = parseFloat(el.dataset.speed || "1.3");
           const offset = -y * speed;
           el.style.transform = `translate3d(0, ${offset}px, 0)`;
         });
-
         ticking = false;
       });
     };
@@ -65,37 +85,46 @@ export default function About() {
       onScroll();
     };
 
-    // Init
     collect();
     evaluate();
     onScroll();
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [reduce]);
 
   return (
-    <main className={styles.page}>
-      {/* Background tiles with a bit more movement */}
-      <div className={styles.bgWrap} aria-hidden="true">
+    <motion.main
+      className={styles.page}
+      initial="hidden"
+      animate="show"
+      variants={page}
+    >
+      {/* background tiles: fade only, no translate to avoid transform conflict */}
+      <motion.div className={styles.bgWrap} aria-hidden="true" variants={fade}>
         {bgImages.map((src, i) => (
           <div
             key={i}
             className={styles.bgTile}
             style={{ backgroundImage: `url(${src})` }}
-            data-speed={i === 0 ? 0.12 : i === 1 ? 0.15 : 0.19} // stronger speeds
+            data-speed={i === 0 ? 0.12 : i === 1 ? 0.15 : 0.19}
           />
         ))}
         <div className={styles.bgVignette} />
-      </div>
+      </motion.div>
 
-      {/* Artist card */}
-      <section className={styles.card} role="region" aria-label="About Derek Calkins">
+      {/* artist card */}
+      <motion.section
+        className={`${styles.card} ${styles.willChange}`}
+        role="region"
+        aria-label="About Derek Calkins"
+        variants={up}
+        layout="position">
+
         <div className={styles.head}>
           <div className={styles.headshot}>
             <img src="/images/dc-profile.jpg" alt="Derek Calkins headshot" />
@@ -114,110 +143,94 @@ export default function About() {
             </ul>
 
             <p className={styles.summary}>
-              Derek is a Las Vegas–based tattoo artist with 17 years of experience.
-              He specializes in large-scale pieces, black and grey realism, color realism, and surrealism,
-              creating bold, detailed work inspired by pop culture that flows naturally and lasts beautifully.
+              Derek is a Las Vegas based tattoo artist with 17 years of experience. He specializes in large scale pieces,
+              black and grey realism, color realism, and surrealism. His work is bold and detailed, flows with the body,
+              and holds up beautifully over time.
             </p>
+
             <div className={styles.sponsors}>
-
-
               <div className={styles.sponsorLabel}>Proudly Sponsored By:</div>
               <section className={styles.sponsorStrip} aria-label="Sponsors">
                 <div className={styles.sponsorCard}>
                   <div className={styles.sponsorLabel}>Raw Pigments</div>
-                  <img
-                    src="/images/raw-logo.jpg"
-                    alt="Raw Pigments logo"
-                    className={styles.sponsorLogo}
-                  />
+                  <img src="/images/raw-logo.jpg" alt="Raw Pigments logo" className={styles.sponsorLogo} />
                 </div>
 
                 <div className={styles.sponsorCard}>
                   <div className={styles.sponsorLabel}>Hustle Butter</div>
-                  <img
-                    src="/images/hustle-logo.jpg"
-                    alt="Hustle Butter Deluxe logo"
-                    className={styles.sponsorLogo}
-                  />
+                  <img src="/images/hustle-logo.jpg" alt="Hustle Butter Deluxe logo" className={styles.sponsorLogo} />
                 </div>
               </section>
             </div>
-
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* About rows */}
+      {/* rows: reveal on first view for extra smoothness */}
       <section className={styles.rows}>
-        {/* Row 1: image | text */}
-        <div className={styles.row}>
+        <motion.div
+          className={`${styles.row} ${styles.willChange}`}
+          variants={up}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className={styles.rowImage} data-speed="0.1">
             <img src="/images/dc-profile-2.jpg" alt="Studio or work in progress" />
           </div>
           <div className={styles.rowText}>
             <h2>Artist Bio</h2>
             <p>
-              Derek is a Las Vegas based tattoo artist known for clean execution and
-              client centered design. He builds pieces that fit the body well and age
-              gracefully, always balancing detail with readability and longevity.
+              Derek is known for clean execution and client centered design. He builds pieces that fit the body and age
+              gracefully, balancing detail with readability and longevity.
             </p>
             <p>
-              He speciliazes in <strong>Color realism</strong>, blending tones to achieve vibrant yet
-              natural results that hold their integrity over time. He is also an expert in
-              <strong> Black and Grey realism</strong>. He creates
-              smooth gradients, deep contrast, and lifelike depth that bring portraits,
-              wildlife, and surreal imagery to life.
+              He specializes in <strong>Color realism</strong> and <strong>Black and Grey realism</strong>, creating smooth gradients,
+              deep contrast, and lifelike depth for portraits, wildlife, and surreal imagery.
             </p>
             <p>
-              Derek has a passion for strong design and composition. Every tattoo is
-              planned around the body’s flow with careful attention to placement, scale,
-              and negative space so the piece reads clearly on day one and still looks
-              powerful years later.
+              Every tattoo is planned around flow, placement, and smart negative space so the design reads clearly on day one
+              and years later.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Row 2: text | image */}
-        <div className={`${styles.row} ${styles.rowAlt}`}>
+        <motion.div
+          className={`${styles.row} ${styles.rowAlt} ${styles.willChange}`}
+          variants={up}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className={styles.rowText}>
             <h2>Approach</h2>
             <p>
-              Every tattoo is built for longevity and clarity. Derek maps values first
-              to ensure solid blacks, structured mid tones, and intentional highlights,
-              which keeps realism readable from a distance and crisp as it heals.
+              Longevity and clarity first. Values are mapped for solid blacks, structured mid tones, and intentional highlights.
+              That keeps realism readable from a distance and crisp as it heals.
             </p>
             <p>
-              The process starts with a conversation about story, placement, and scale.
-              Reference gathering follows, then a composition pass that considers the
-              body’s lines, movement, and how the piece will connect to existing or
-              future work. Layouts emphasize flow, balance, and smart use of negative
-              space so the design breathes on skin.
+              The process covers story, placement, and scale. References are gathered, then a composition pass aligns with the body.
+              Layouts emphasize flow, balance, and breathable negative space.
             </p>
             <p>
-              Before session day, you review the plan together and lock the strategy for
-              sessions, including breakpoints for large projects. On the day of, stencil
-              placement is adjusted with you for accuracy. Aftercare is explained in clear
-              steps because healed results are part of the art.
+              Before session day you review the plan together. On the day of, stencil placement is adjusted for accuracy, and aftercare
+              is explained step by step.
             </p>
           </div>
           <div className={styles.rowImage} data-speed="0.08">
             <img src="/images/dc-profile-3.jpg" alt="Design sketch or equipment" />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Row 3: Conventions and Awards */}
-        <div className={styles.row}>
+        <motion.div
+          className={`${styles.row} ${styles.willChange}`}
+          variants={up}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className={styles.rowImage} data-speed="0.03">
             <img src="/images/dc-profile-4.jpg" alt="Tattoo convention floor or award moments" />
           </div>
           <div className={styles.rowText}>
             <h2>Conventions and Awards</h2>
             <p>
-              Derek actively participates in major tattoo conventions and guest spots,
-              where he shares his approach to composition and realism, connects with
-              clients, and learns from peers. His work has earned recognition in realism
-              focused categories and he continues to refine his craft through these
-              events.
+              Derek is active at major conventions and guest spots. He shares his approach, connects with clients, and learns from peers.
+              His work has earned recognition in realism categories.
             </p>
             <ul>
               <li>The Allstars Tattoo Convention in Miami, FL</li>
@@ -225,12 +238,11 @@ export default function About() {
               <li>Golden State Tattoo Expo in Pasadena, CA</li>
             </ul>
             <p className={styles.summary}>
-              For upcoming convention dates or a full list of recognitions, please check
-              social updates or reach out directly.
+              For upcoming dates or a full list of recognitions, check social updates or reach out.
             </p>
           </div>
-        </div>
+        </motion.div>
       </section>
-    </main>
+    </motion.main>
   );
 }

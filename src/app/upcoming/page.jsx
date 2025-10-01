@@ -1,27 +1,37 @@
-// app/upcoming/page.jsx
-import ConventionCalendar from "../components/ConventionCalendar";
-import styles from "./Upcoming.module.css";
+import UpcomingClient from "./UpcomingClient";
 
 export const metadata = {
-  title: "Upcoming - Conventions and Guest Spots",
-  description: "See Derek Calkins' upcoming tattoo conventions, expos, and guest artist appearances.",
+  title: "Upcoming Events | Derek Calkins",
+  description:
+    "See Derek Calkins’ upcoming tattoo conventions, expos, and guest spots. Find dates and locations, then book a session or meet in person.",
+  alternates: { canonical: "/upcoming" },
+  openGraph: {
+    title: "Upcoming Events | Derek Calkins",
+    description:
+      "Conventions, expos, and guest spots. See where Derek will be tattooing next and how to book.",
+    url: "https://dcartstudio.com/upcoming",
+    siteName: "Derek Calkins",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/og/upcoming-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Collage of Derek Calkins tattoos with Upcoming Events text",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Upcoming Events | Derek Calkins",
+    description:
+      "Conventions, expos, and guest spots. See where Derek will be tattooing next.",
+    images: ["/og/upcoming-og.jpg"],
+    creator: "@dc_art_collective",
+  },
 };
 
 export default function UpcomingPage() {
-  return (
-    <main className={styles.page}>
-      {/* Page header */}
-      <header className={styles.hero}>
-        <h1 className={styles.title}>Upcoming Events</h1>
-        <p className={styles.subhead}>
-          Follow Derek’s journey across conventions, expos, and guest spots.
-          Meet in person, book a session, or just stop by to say hello —
-          these are the best opportunities to see the work live.
-        </p>
-      </header>
-
-      {/* Calendar */}
-      <ConventionCalendar />
-    </main>
-  );
+  return <UpcomingClient />;
 }

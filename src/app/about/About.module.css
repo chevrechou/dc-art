@@ -140,9 +140,9 @@
   margin: .6rem 0 1rem;
   line-height: 1.8;
   color: #f2f2f2;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   letter-spacing: 0.04rem;
-  text-shadow: 0 8px 4px rgb(0, 0, 0);
+  text-shadow: 0 5px 4px rgb(0, 0, 0);
 
 }
 
@@ -257,7 +257,7 @@
 }
 
 .rowText {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.7);
   /* legibility on busy bg */
   padding: 1.5rem;
   border-radius: 12px;
@@ -279,9 +279,9 @@
 .rowText p {
   margin: 0 0 .8rem;
   line-height: 1.5;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #f0f0f0;
-  opacity: 0.95;
+  opacity: 0.9;
   text-shadow: 0 10px 8px rgb(0, 0, 0);
 
 }
@@ -301,7 +301,12 @@
 .rowText li {
   position: relative;
   padding-left: 1.5rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  height: 1.8rem;
+
 }
 
 .rowText li::before {
@@ -309,9 +314,10 @@
   position: absolute;
   left: 0;
   top: 0;
+  display: flex;
+  align-items: center;
   color: #e0b15b;
-  font-size: 1rem;
-  line-height: 1.2;
+  font-size: 1.5rem;
 }
 
 /* Animations */
@@ -422,6 +428,12 @@
     margin: 0 1.5rem;
   }
 
+  .rowText li {
+    margin-bottom: 1rem;
+    height: auto;
+
+  }
+
   .rowText h2 {
     font-size: 1.6rem;
   }
@@ -465,6 +477,11 @@
   .rowText p {
     font-size: 1rem;
   }
+}
+
+/* helps the GPU plan the animation without jank */
+.willChange {
+  will-change: transform, opacity;
 }
 
 /* Reduced motion safety */

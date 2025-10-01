@@ -4,7 +4,7 @@
 	/* max-width: 1400px; */
 	margin: 0 auto;
 	color: #ffffff;
-	text-shadow: 0 10px 8px rgb(0, 0, 0);
+	text-shadow: 0 4px 4px rgb(0, 0, 0);
 	background-color: #222222;
 
 
@@ -280,6 +280,17 @@
 .navLeft:active,
 .navRight:active {
 	transform: translateY(-50%) translateY(1px);
+}
+
+
+/* Gallery.module.css */
+.header,
+.grid,
+.flashSection,
+.lightbox,
+.figure,
+.tile {
+	will-change: transform, opacity;
 }
 
 /* Responsive columns */

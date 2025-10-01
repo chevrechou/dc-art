@@ -1,20 +1,11 @@
 "use client";
+
 import { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import Script from "next/script";
 import styles from "./Contact.module.css";
-
-// Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faPhone,
-	faEnvelope,
-	faMapMarkerAlt,
-	faCopy,
-	faCircleInfo,
-	faListCheck,
-	faPaperclip,
-	faClock,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPhone, faEnvelope, faMapMarkerAlt, faCopy, faCircleInfo, faListCheck, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import DiagonalBG from "../components/DiagonalBG";
 
 const STUDIO = {
@@ -27,6 +18,36 @@ const STUDIO = {
 };
 
 export default function ContactPage() {
+	const reduce = useReducedMotion();
+
+	// page and section variants
+	const page = {
+		hidden: { opacity: 0.7 },
+		show: {
+			opacity: 1,
+			transition: {
+				duration: reduce ? 0 : 0.75,
+				ease: [0.42, 1, 0.86, 1],
+				when: "beforeChildren",
+				staggerChildren: reduce ? 0 : 0.32,
+			},
+		},
+	};
+
+	const up = {
+		hidden: { opacity: 0, y: 16 },
+		show: {
+			opacity: 1,
+			y: 0,
+			transition: { duration: reduce ? 0 : 2.5, ease: [0.32, 1, 0.66, 1] },
+		},
+	};
+
+	const fade = {
+		hidden: { opacity: 0.5 },
+		show: { opacity: 1, transition: { duration: reduce ? 0 : 0.6, ease: "easeOut" } },
+	};
+
 	// form state
 	const [fullName, setFullName] = useState("");
 	const [replyEmail, setReplyEmail] = useState("");
@@ -75,26 +96,30 @@ export default function ContactPage() {
 		} catch { }
 	};
 
-	const requiredOk = () =>
-		fullName.trim() && replyEmail.trim() && placement.trim() && description.trim();
+	const requiredOk = () => fullName.trim() && replyEmail.trim() && placement.trim() && description.trim();
 
 	return (
-		<main className={styles.page}>
+		<motion.main className={styles.page} initial="hidden" animate="show" variants={page}>
 			<DiagonalBG />
 
 			{/* Hero */}
-			<section className={styles.hero}>
+			<motion.section className={styles.hero} variants={up}>
 				<h1 className={styles.title}>Contact</h1>
 				<p className={styles.kicker}>Let's work on your next project</p>
-				<p className={styles.compel}>
-					Every tattoo I take on is a chance to bring years of practice and passion to life.
-					I look for clients who want to collaborate but also trust me with the creative freedom
-					to do my best work.
-				</p>
-				<p className={styles.compel}>
-					My proudest moments are when I create pieces I’d be honored to wear myself —
-					work that feels timeless, personal, and powerful.
-				</p>
+				<motion.blockquote className={styles.quote} variants={up}>
+					<p>
+						Every tattoo I take on is a chance to bring years of practice and passion to life.
+						I look for clients who want to collaborate but also trust me with the creative freedom
+						to do my best work.
+					</p>
+					<p>
+						My proudest moments are when I create pieces I would be honored to wear myself,
+						work that feels timeless, personal, and powerful.
+					</p>
+					<footer className={styles.cite}>
+						<cite>- Derek Calkins</cite>
+					</footer>
+				</motion.blockquote>
 
 
 				<div className={styles.actions}>
@@ -111,33 +136,26 @@ export default function ContactPage() {
 						<FontAwesomeIcon icon={faMapMarkerAlt} /> Map
 					</a>
 				</div>
-			</section>
+			</motion.section>
+
 			{/* Two column layout */}
 			<section className={styles.twoCol}>
-				{/* LEFT COLUMN: media grid */}
-				<aside className={styles.mediaCol}>
-					{/* Row 1: Video */}
-					<div className={styles.videoCard}>
+				{/* LEFT COLUMN: media */}
+				<motion.aside className={styles.mediaCol} variants={up}>
+					{/* Video */}
+					<motion.div className={styles.videoCard} variants={fade}>
 						<div className={styles.videoFrame}>
-							<video
-								className={styles.video}
-								autoPlay
-								muted
-								loop
-								playsInline
-								controls
-								poster="/images/video-poster.jpg"
-							>
+							<video className={styles.video} autoPlay muted loop playsInline controls poster="/images/video-poster.jpg">
 								<source src="/images/tattooing-vid.mp4" type="video/mp4" />
 								<source src="/videos/tattoo-progress.webm" type="video/webm" />
 								Your browser does not support the video tag.
 							</video>
 						</div>
 						<div className={styles.videoCaption}>Tattoo session in progress.</div>
-					</div>
+					</motion.div>
 
-					{/* Row 2: Instagram embed */}
-					<div className={styles.instaCard}>
+					{/* Instagram embed */}
+					<motion.div className={styles.instaCard} variants={up}>
 						<h3 className={styles.embedTitle}>Latest on Instagram</h3>
 						<blockquote
 							className="instagram-media"
@@ -155,7 +173,7 @@ export default function ContactPage() {
 								minWidth: "none",
 							}}
 						/>
-						<Script src="//www.instagram.com/embed.js" strategy="lazyOnload" />
+						<Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
 						<p className={styles.instaNote}>
 							If the feed does not load,{" "}
 							<a href={STUDIO.ig} target="_blank" rel="noreferrer" className={styles.link}>
@@ -163,28 +181,25 @@ export default function ContactPage() {
 							</a>
 							.
 						</p>
-					</div>
-				</aside>
+					</motion.div>
+				</motion.aside>
 
 				{/* RIGHT COLUMN: form */}
-				<div className={styles.formCol}>
+				<motion.div className={styles.formCol} variants={up}>
 					<section className={styles.formWrap} aria-label="Tattoo request">
 						<h2 className={styles.h2}>Tattoo Request</h2>
 
-						{/* Expanded instructions */}
 						<div className={styles.notice} role="note">
 							<FontAwesomeIcon icon={faListCheck} /> How to submit
 							<ol style={{ margin: "0.5rem 0 0 1.25rem" }}>
 								<li>Fill out the form so we can prep your message.</li>
 								<li>
-									Click <strong>Open Mail</strong> or <strong>Open Texts</strong>.
-									Your subject and body will auto fill.
+									Click <strong>Open Mail</strong> or <strong>Open Texts</strong>. Your subject and body will auto fill.
 								</li>
 								<li>
-									<strong>Attach your reference images</strong> in the email or text before sending{" "}
-									<FontAwesomeIcon icon={faPaperclip} />.
+									<strong>Attach your reference images</strong> in the email or text before sending <FontAwesomeIcon icon={faPaperclip} />.
 								</li>
-								<li>Send your message. You’ll get a reply with next steps and scheduling.</li>
+								<li>Send your message. You will get a reply with next steps and scheduling.</li>
 							</ol>
 						</div>
 
@@ -197,57 +212,29 @@ export default function ContactPage() {
 							<div className={styles.row}>
 								<label className={styles.label}>
 									Name
-									<input
-										className={styles.input}
-										value={fullName}
-										onChange={(e) => setFullName(e.target.value)}
-										placeholder="Jane Doe"
-										aria-required="true"
-									/>
+									<input className={styles.input} value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Jane Doe" aria-required="true" />
 								</label>
 								<label className={styles.label}>
 									Email
-									<input
-										type="email"
-										className={styles.input}
-										value={replyEmail}
-										onChange={(e) => setReplyEmail(e.target.value)}
-										placeholder="you@example.com"
-										aria-required="true"
-									/>
+									<input type="email" className={styles.input} value={replyEmail} onChange={(e) => setReplyEmail(e.target.value)} placeholder="you@example.com" aria-required="true" />
 								</label>
 							</div>
 
 							<div className={styles.row}>
 								<label className={styles.label}>
 									Placement
-									<input
-										className={styles.input}
-										value={placement}
-										onChange={(e) => setPlacement(e.target.value)}
-										placeholder="Right forearm outer"
-										aria-required="true"
-									/>
+									<input className={styles.input} value={placement} onChange={(e) => setPlacement(e.target.value)} placeholder="Right forearm outer" aria-required="true" />
 								</label>
 								<label className={styles.label}>
 									Budget
-									<input
-										className={styles.input}
-										value={budget}
-										onChange={(e) => setBudget(e.target.value)}
-										placeholder="$500 to $800"
-									/>
+									<input className={styles.input} value={budget} onChange={(e) => setBudget(e.target.value)} placeholder="$500 to $800" />
 								</label>
 							</div>
 
 							<div className={styles.row}>
 								<label className={styles.label}>
 									Color or Black and Grey
-									<select
-										className={styles.select}
-										value={style}
-										onChange={(e) => setStyle(e.target.value)}
-									>
+									<select className={styles.select} value={style} onChange={(e) => setStyle(e.target.value)}>
 										<option>Black & Grey</option>
 										<option>Color</option>
 									</select>
@@ -255,12 +242,7 @@ export default function ContactPage() {
 
 								<label className={styles.label}>
 									Reference links
-									<input
-										className={styles.input}
-										value={refs}
-										onChange={(e) => setRefs(e.target.value)}
-										placeholder="Paste 1 to 3 links, comma separated"
-									/>
+									<input className={styles.input} value={refs} onChange={(e) => setRefs(e.target.value)} placeholder="Paste 1 to 3 links, comma separated" />
 								</label>
 							</div>
 
@@ -327,13 +309,12 @@ export default function ContactPage() {
 							</div>
 
 							<p className={styles.disclaimer}>
-								Attach your reference images in the email or text before you send it.
-								Mailto and SMS links cannot include files automatically.
+								Attach your reference images in the email or text before you send it. Mailto and SMS links cannot include files automatically.
 							</p>
 						</div>
 					</section>
-				</div>
+				</motion.div>
 			</section>
-		</main>
+		</motion.main>
 	);
 }

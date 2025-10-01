@@ -1,5 +1,7 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+
+import { useMemo, useState, useEffect } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import styles from "./Gallery.module.css";
 
 /* =========
@@ -26,14 +28,12 @@ const FILTERS = [
 
 /* =========
 	 Flash (new section)
-	 Images live in /public/flash
-	 Example files: /public/flash/flash-1.jpg ... flash-12.jpg
 	 ========= */
 const FLASH = Array.from({ length: 12 }, (_, i) => {
 	const idx = i + 1;
 	const stylesPool = ["linework", "color", "anime", "surreal"];
 	const style = stylesPool[idx % stylesPool.length];
-	const available = idx % 5 !== 0; // every 5th is “claimed” just for demo
+	const available = idx % 5 !== 0; // every 5th is claimed for demo
 	return {
 		id: `f-${idx}`,
 		// src: `/flash/flash-${idx}.jpg`,
@@ -52,11 +52,12 @@ const FLASH_STYLE = [
 	{ key: "surreal", label: "Surreal" },
 ];
 
-
 export default function GalleryPage() {
+	const reduce = useReducedMotion();
+
 	/* ---- portfolio state ---- */
 	const [idx, setIdx] = useState(null); // index within active list
-	const [activeSet, setActiveSet] = useState(null); // 'work' | 'flash' | null (for lightbox source)
+	const [activeSet, setActiveSet] = useState(null); // "work" | "flash" | null
 	const [filter, setFilter] = useState("all");
 	const [shuffled, setShuffled] = useState(false);
 
@@ -68,7 +69,9 @@ export default function GalleryPage() {
 	const workData = useMemo(() => {
 		const base = filter === "all" ? RAW : RAW.filter((x) => x.kind === filter);
 		if (!shuffled) return base;
-		return [...base].sort((a, b) => ((a.id.length * 37) % 17) - ((b.id.length * 37) % 17));
+		return [...base].sort(
+			(a, b) => ((a.id.length * 37) % 17) - ((b.id.length * 37) % 17)
+		);
 	}, [filter, shuffled]);
 
 	const flashData = useMemo(() => {
@@ -89,6 +92,7 @@ export default function GalleryPage() {
 		setActiveSet(null);
 	};
 	const activeList = activeSet === "flash" ? flashData : workData;
+
 	const prev = (e) => {
 		e?.stopPropagation?.();
 		setIdx((i) => (!activeList.length ? null : i === 0 ? activeList.length - 1 : i - 1));
@@ -110,41 +114,50 @@ export default function GalleryPage() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [idx, activeList.length]);
 
-	/* ---- reveal on scroll (portfolio section) ---- */
-	const gridRef1 = useRef(null);
-	useEffect(() => {
-		const el = gridRef1.current;
-		if (!el) return;
-		const tiles = Array.from(el.querySelectorAll(`.${styles.tile}`));
-		const io = new IntersectionObserver(
-			(entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add(styles.visible)),
-			{ rootMargin: "80px 0px", threshold: 0.1 }
-		);
-		tiles.forEach((t) => io.observe(t));
-		return () => io.disconnect();
-	}, [workData]);
+	/* ---- framer variants ---- */
+	const page = {
+		hidden: { opacity: 0 },
+		show: {
+			opacity: 1,
+			transition: {
+				duration: reduce ? 0 : 0.6,
+				ease: [0.42, 1, 0.76, 1],
+				when: "beforeChildren",
+				staggerChildren: reduce ? 0 : 0.38,
+			},
+		},
+	};
 
-	/* ---- reveal on scroll (flash section) ---- */
-	const gridRef2 = useRef(null);
-	useEffect(() => {
-		const el = gridRef2.current;
-		if (!el) return;
-		const tiles = Array.from(el.querySelectorAll(`.${styles.tile}`));
-		const io = new IntersectionObserver(
-			(entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add(styles.visible)),
-			{ rootMargin: "80px 0px", threshold: 0.1 }
-		);
-		tiles.forEach((t) => io.observe(t));
-		return () => io.disconnect();
-	}, [flashData]);
+	const up = {
+		hidden: { opacity: 0, y: 16 },
+		show: {
+			opacity: 1,
+			y: 0,
+			transition: { duration: reduce ? 0 : 2.5, ease: [0.32, 1, 0.66, 1] },
+		},
+	};
+
+	const tileV = {
+		hidden: { opacity: 0, scale: 0.98 },
+		show: {
+			opacity: 1,
+			scale: 1,
+			transition: { duration: reduce ? 0 : 0.45, ease: [0.32, 1, 0.56, 1] },
+		},
+		exit: {
+			opacity: 0,
+			scale: 0.98,
+			transition: { duration: reduce ? 0 : 0.3 },
+		},
+	};
 
 	return (
-		<main className={styles.page}>
+		<motion.main className={styles.page} initial="hidden" animate="show" variants={page} >
 			{/* ===== Portfolio (existing) ===== */}
-			<header className={styles.header}>
+			<motion.header className={styles.header} variants={up}>
 				<h1 className={styles.title}>Gallery</h1>
 				<p className={styles.kicker}>
-					A curated collection of my work — from large-scale realism to vibrant pop culture and anime pieces.
+					A curated collection of my work, from large scale realism to vibrant pop culture and anime pieces.
 				</p>
 				<div className={styles.actions}>
 					<div className={styles.filters} role="tablist" aria-label="Filter gallery">
@@ -172,28 +185,49 @@ export default function GalleryPage() {
 						</button>
 					</div>
 				</div>
-			</header>
+			</motion.header>
 
-			<section ref={gridRef1} className={styles.grid} aria-label="Portfolio gallery">
-				{workData.map((img, i) => (
-					<button
-						key={img.id}
-						className={styles.tile}
-						onClick={() => openFrom("work", i)}
-						aria-label={`Open ${img.alt}`}
-					>
-						<img src={img.src} alt={img.alt} loading="lazy" />
-						<span className={styles.badge}>{img.kind === "color" ? "Color" : "B & G"}</span>
-					</button>
-				))}
-			</section>
+			<motion.section
+				className={styles.grid}
+				aria-label="Portfolio gallery"
+				variants={up}
+				layout="position"
+			>
+				<AnimatePresence mode="popLayout">
+					{workData.map((img, i) => (
+						<motion.button
+							key={img.id}
+							className={styles.tile}
+							onClick={() => openFrom("work", i)}
+							aria-label={`Open ${img.alt}`}
+							variants={tileV}
+							initial="hidden"
+							animate="show"
+							exit="exit"
+							layout
+							whileHover={{ y: -2 }}
+							whileTap={{ scale: 0.98 }}
+						>
+							<img src={img.src} alt={img.alt} loading="lazy" />
+							<span className={styles.badge}>{img.kind === "color" ? "Color" : "B & G"}</span>
+						</motion.button>
+					))}
+				</AnimatePresence>
+			</motion.section>
 
 			{/* ===== Flash (new) ===== */}
-			<section className={styles.flashSection} aria-label="Pre-Designed Flash" id="flash">
+			<motion.section
+				className={styles.flashSection}
+				aria-label="Pre-Designed Flash"
+				id="flash"
+				variants={up}
+				layout="position"
+			>
+
 				<header className={styles.header}>
 					<h2 className={styles.flashTitle}>Pre-Designed Flash</h2>
 					<p className={styles.kicker}>
-						One-off original designs—first come, first served. DM or email to claim.
+						One off original designs, first come first served. DM or email to claim.
 					</p>
 
 					<div className={styles.actions}>
@@ -209,7 +243,6 @@ export default function GalleryPage() {
 							))}
 						</div>
 
-
 						<div className={styles.rightActions}>
 							<label className={styles.toggleLabel}>
 								<input
@@ -223,59 +256,91 @@ export default function GalleryPage() {
 					</div>
 				</header>
 
-				<section ref={gridRef2} className={styles.grid} aria-label="Flash gallery">
+				<motion.section className={styles.grid} aria-label="Flash gallery" layout="position">
 					{flashData.length === 0 ? (
-						<div className={styles.empty}>No flash matches those filters—try another combo.</div>
+						<div className={styles.empty}>No flash matches those filters, try another combo.</div>
 					) : (
-						flashData.map((img, i) => (
-							<button
-								key={img.id}
-								className={`${styles.tile} ${!img.available ? styles.tileDisabled : ""}`}
-								onClick={() => openFrom("flash", i)}
-								aria-label={`Open ${img.alt}`}
-								disabled={!img.available}
-								title={!img.available ? "Claimed" : "Available"}
-							>
-								<img src={img.src} alt={img.alt} loading="lazy" />
-								<span className={styles.badgeRow}>
-									<span className={styles.badge}>{img.style}</span>
-									<span className={`${styles.badge} ${img.available ? styles.badgeOk : styles.badgeMuted}`}>
-										{img.available ? "Available" : "Claimed"}
+						<AnimatePresence mode="popLayout">
+							{flashData.map((img, i) => (
+								<motion.button
+									key={img.id}
+									className={`${styles.tile} ${!img.available ? styles.tileDisabled : ""}`}
+									onClick={() => openFrom("flash", i)}
+									aria-label={`Open ${img.alt}`}
+									disabled={!img.available}
+									title={!img.available ? "Claimed" : "Available"}
+									variants={tileV}
+									initial="hidden"
+									animate="show"
+									exit="exit"
+									layout
+									whileHover={{ y: -2 }}
+									whileTap={{ scale: 0.98 }}
+								>
+									<img src={img.src} alt={img.alt} loading="lazy" />
+									<span className={styles.badgeRow}>
+										<span className={styles.badge}>{img.style}</span>
+										<span className={`${styles.badge} ${img.available ? styles.badgeOk : styles.badgeMuted}`}>
+											{img.available ? "Available" : "Claimed"}
+										</span>
 									</span>
-								</span>
-							</button>
-						))
+								</motion.button>
+							))}
+						</AnimatePresence>
 					)}
-				</section>
-			</section>
+				</motion.section>
+			</motion.section>
 
 			{/* ===== Shared Lightbox ===== */}
-			{idx !== null && activeList[idx] && (
-				<div className={styles.lightbox} onClick={close} role="dialog" aria-modal="true" aria-label="Image viewer">
-					<button className={styles.close} aria-label="Close" onClick={close}>
-						×
-					</button>
+			<AnimatePresence>
+				{idx !== null && activeList[idx] && (
+					<motion.div
+						className={styles.lightbox}
+						onClick={close}
+						role="dialog"
+						aria-modal="true"
+						aria-label="Image viewer"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: reduce ? 0 : 0.2 }}
+					>
+						<button className={styles.close} aria-label="Close" onClick={close}>
+							×
+						</button>
 
-					<button className={styles.navLeft} aria-label="Previous" onClick={prev}>
-						‹
-					</button>
+						<button className={styles.navLeft} aria-label="Previous" onClick={prev}>
+							‹
+						</button>
 
-					<figure className={styles.figure} onClick={(e) => e.stopPropagation()}>
-						<img className={styles.lbImg} src={activeList[idx].src} alt={activeList[idx].alt} />
-						<figcaption className={styles.caption}>
-							<span>{activeList[idx].alt}</span>
-							<span className={styles.sep} />
-							<span>
-								{idx + 1} of {activeList.length}
-							</span>
-						</figcaption>
-					</figure>
+						<motion.figure
+							className={styles.figure}
+							onClick={(e) => e.stopPropagation()}
+							initial={{ opacity: 0, scale: 0.98 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0.98 }}
+							transition={{ duration: reduce ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+						>
+							<img
+								className={styles.lbImg}
+								src={activeList[idx].src}
+								alt={activeList[idx].alt}
+							/>
+							<figcaption className={styles.caption}>
+								<span>{activeList[idx].alt}</span>
+								<span className={styles.sep} />
+								<span>
+									{idx + 1} of {activeList.length}
+								</span>
+							</figcaption>
+						</motion.figure>
 
-					<button className={styles.navRight} aria-label="Next" onClick={next}>
-						›
-					</button>
-				</div>
-			)}
-		</main>
+						<button className={styles.navRight} aria-label="Next" onClick={next}>
+							›
+						</button>
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</motion.main>
 	);
 }
