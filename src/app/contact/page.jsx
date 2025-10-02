@@ -7,6 +7,7 @@ import styles from "./Contact.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faEnvelope, faMapMarkerAlt, faCopy, faCircleInfo, faListCheck, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import DiagonalBG from "../components/DiagonalBG";
+import JsonLd from "../components/JsonLd";
 
 const STUDIO = {
 	name: "DC Art - Derek Calkins",
@@ -17,6 +18,22 @@ const STUDIO = {
 	maps: "https://maps.app.goo.gl/vEWYfu8qQsFz8xw5A",
 };
 
+const data = {
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	name: "DC Art - Derek Calkins",
+	image: "https://dcartstudio.com/images/dc-profile.jpg",
+	url: "https://dcartstudio.com/contact",
+	telephone: "+1-702-555-0123",
+	address: {
+		"@type": "PostalAddress",
+		streetAddress: "6910 South Rainbow Boulevard Unit 107",
+		addressLocality: "Las Vegas",
+		addressRegion: "NV",
+		postalCode: "89118",
+		addressCountry: "US"
+	}
+};
 export default function ContactPage() {
 	const reduce = useReducedMotion();
 
@@ -101,7 +118,7 @@ export default function ContactPage() {
 	return (
 		<motion.main className={styles.page} initial="hidden" animate="show" variants={page}>
 			<DiagonalBG />
-
+			<JsonLd data={data} />
 			{/* Hero */}
 			<motion.section className={styles.hero} variants={up}>
 				<h1 className={styles.title}>Contact</h1>

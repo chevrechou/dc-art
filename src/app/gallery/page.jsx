@@ -3,21 +3,30 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import styles from "./Gallery.module.css";
+import JsonLd from "../components/JsonLd";
+import RAW from "./raw";
 
+const data = {
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	name: "Tattoo Gallery",
+	url: "https://dcartstudio.com/gallery",
+	hasPart: [
+		{ "@type": "CreativeWork", name: "Black and Grey Realism" },
+		{ "@type": "CreativeWork", name: "Color Realism" },
+		{ "@type": "CreativeWork", name: "Pop Culture" }
+	]
+};
 /* =========
 	 Portfolio (existing gallery)
 	 ========= */
-const RAW = Array.from({ length: 15 }, (_, i) => {
-	const idx = i + 1;
-	const isColor = idx % 3 === 0;
-	return {
-		id: `w-${idx}`,
-		src: `/images/tattoo-${idx}.jpg`,
-		alt: `Tattoo ${idx}`,
-		kind: isColor ? "color" : "blackgrey",
-	};
-});
 
+const KIND_LABEL = {
+	blackgrey: "B & G",
+	color: "Color",
+	popculture: "Pop Culture",
+	portrait: "Portrait",
+};
 const FILTERS = [
 	{ key: "all", label: "All" },
 	{ key: "blackgrey", label: "Black and Grey" },
@@ -59,7 +68,12 @@ export default function GalleryPage() {
 	const [idx, setIdx] = useState(null); // index within active list
 	const [activeSet, setActiveSet] = useState(null); // "work" | "flash" | null
 	const [filter, setFilter] = useState("all");
-	const [shuffled, setShuffled] = useState(false);
+	const [workOrder, setWorkOrder] = useState(RAW);
+
+	// randomize once per page load (client side only)
+	useEffect(() => {
+		setWorkOrder(shuffle(RAW));
+	}, []);
 
 	/* ---- flash state ---- */
 	const [flashStyle, setFlashStyle] = useState("all");
@@ -67,12 +81,10 @@ export default function GalleryPage() {
 
 	/* ---- derived lists ---- */
 	const workData = useMemo(() => {
-		const base = filter === "all" ? RAW : RAW.filter((x) => x.kind === filter);
-		if (!shuffled) return base;
-		return [...base].sort(
-			(a, b) => ((a.id.length * 37) % 17) - ((b.id.length * 37) % 17)
-		);
-	}, [filter, shuffled]);
+		return filter === "all"
+			? workOrder
+			: workOrder.filter((x) => x.kind === filter);
+	}, [filter, workOrder]);
 
 	const flashData = useMemo(() => {
 		return FLASH.filter((f) => {
@@ -151,8 +163,18 @@ export default function GalleryPage() {
 		},
 	};
 
+	const shuffle = (arr) => {
+		const a = arr.slice();
+		for (let i = a.length - 1; i > 0; i -= 1) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	};
+
 	return (
 		<motion.main className={styles.page} initial="hidden" animate="show" variants={page} >
+			<JsonLd data={data} />
 			{/* ===== Portfolio (existing) ===== */}
 			<motion.header className={styles.header} variants={up}>
 				<h1 className={styles.title}>Gallery</h1>
@@ -173,17 +195,6 @@ export default function GalleryPage() {
 							</button>
 						))}
 					</div>
-
-					<div className={styles.rightActions}>
-						<button
-							className={styles.pill}
-							onClick={() => setShuffled((s) => !s)}
-							aria-pressed={shuffled}
-							title="Shuffle order"
-						>
-							{shuffled ? "Unshuffle" : "Shuffle"}
-						</button>
-					</div>
 				</div>
 			</motion.header>
 
@@ -193,7 +204,7 @@ export default function GalleryPage() {
 				variants={up}
 				layout="position"
 			>
-				<AnimatePresence mode="popLayout">
+				<AnimatePresence>
 					{workData.map((img, i) => (
 						<motion.button
 							key={img.id}
@@ -204,19 +215,20 @@ export default function GalleryPage() {
 							initial="hidden"
 							animate="show"
 							exit="exit"
-							layout
-							whileHover={{ y: -2 }}
-							whileTap={{ scale: 0.98 }}
+							whileHover={{ y: -4 }}
+							whileTap={{ scale: 0.88 }}
 						>
 							<img src={img.src} alt={img.alt} loading="lazy" />
-							<span className={styles.badge}>{img.kind === "color" ? "Color" : "B & G"}</span>
+							<span className={styles.badge}>
+								{KIND_LABEL[img.kind] ?? "Other"}
+							</span>
 						</motion.button>
 					))}
 				</AnimatePresence>
 			</motion.section>
 
 			{/* ===== Flash (new) ===== */}
-			<motion.section
+			{/* <motion.section
 				className={styles.flashSection}
 				aria-label="Pre-Designed Flash"
 				id="flash"
@@ -289,7 +301,7 @@ export default function GalleryPage() {
 						</AnimatePresence>
 					)}
 				</motion.section>
-			</motion.section>
+			</motion.section> */}
 
 			{/* ===== Shared Lightbox ===== */}
 			<AnimatePresence>

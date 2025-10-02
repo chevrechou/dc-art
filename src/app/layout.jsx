@@ -11,7 +11,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata = {
-  title: "Derek Calkins Tattoo Portfolio",
+  title: "Derek Calkins Tattoo",
   description: "Portfolio of tattoo artist Derek Calkins",
 };
 

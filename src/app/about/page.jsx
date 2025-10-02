@@ -3,8 +3,19 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import styles from "./About.module.css";
+import JsonLd from "../components/JsonLd";
 
 const bgImages = ["/images/tattoo-1.jpg", "/images/tattoo-2.jpg", "/images/tattoo-3.jpg"];
+const data = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  name: "About Derek Calkins",
+  mainEntity: {
+    "@type": "Person",
+    name: "Derek Calkins",
+    url: "https://dcartstudio.com/about"
+  }
+};
 
 export default function About() {
   const reduce = useReducedMotion();
@@ -104,6 +115,7 @@ export default function About() {
       animate="show"
       variants={page}
     >
+      <JsonLd data={data} />
       {/* background tiles: fade only, no translate to avoid transform conflict */}
       <motion.div className={styles.bgWrap} aria-hidden="true" variants={fade}>
         {bgImages.map((src, i) => (
