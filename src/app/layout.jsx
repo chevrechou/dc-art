@@ -6,6 +6,7 @@ import "./globals.css";  // ✅ global styles here
 
 import { Cormorant_Garamond } from "next/font/google";
 import { Cormorant_Unicase } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 const cormorantUni = Cormorant_Unicase({
   subsets: ["latin"],
@@ -28,7 +29,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={cormorant.className}>
       <body suppressHydrationWarning>
-         <SiteChrome>{children}</SiteChrome>
+        <SiteChrome>
+          <Analytics />
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );
