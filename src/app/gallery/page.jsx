@@ -25,14 +25,14 @@ const KIND_LABEL = {
 	blackgrey: "B & G",
 	color: "Color",
 	popculture: "Pop Culture",
-	portrait: "Portrait",
+	portraits: "Portrait",
 };
 const FILTERS = [
 	{ key: "all", label: "All" },
 	{ key: "blackgrey", label: "Black and Grey" },
 	{ key: "color", label: "Color" },
 	{ key: "popculture", label: "Pop Culture" },
-	{ key: "portrait", label: "Portrait" },
+	{ key: "portraits", label: "Portrait" },
 ];
 
 /* =========

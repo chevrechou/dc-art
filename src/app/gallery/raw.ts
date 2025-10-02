@@ -28,5 +28,8 @@ const RAW = [
   { id: "pop-10", src: "/images/gallery/pop/pop-culture-10.jpeg", kind: "popculture", alt: "Pop culture tattoo 10" },
   { id: "pop-11", src: "/images/gallery/pop/pop-culture-11.jpeg", kind: "popculture", alt: "Pop culture tattoo 11" },
   { id: "pop-12", src: "/images/gallery/pop/pop-culture-12.jpeg", kind: "popculture", alt: "Pop culture tattoo 12" },
+  // -- Portraits --
+  { id: "portrait-1", src: "/images/gallery/portraits/portrait-1.jpeg", kind: "portraits", alt: "Portrait tattoo 1" },
+  { id: "portrait-2", src: "/images/gallery/portraits/portrait-2.jpeg", kind: "portraits", alt: "Portrait tattoo 2" },      
 ];
 export default RAW;
