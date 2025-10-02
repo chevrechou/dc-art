@@ -154,12 +154,12 @@ export default function GalleryPage() {
 		show: {
 			opacity: 1,
 			scale: 1,
-			transition: { duration: reduce ? 0 : 0.45, ease: [0.32, 1, 0.56, 1] },
+			transition: { duration: reduce ? 0 : .95, ease: [0.32, 1, 0.56, 1] },
 		},
 		exit: {
 			opacity: 0,
 			scale: 0.98,
-			transition: { duration: reduce ? 0 : 0.3 },
+			transition: { duration: reduce ? 0 : 0.54 },
 		},
 	};
 
@@ -172,6 +172,7 @@ export default function GalleryPage() {
 		return a;
 	};
 
+	const tween = { type: "tween", ease: [0.4, 1, 0.6, 1], duration: 2 };
 	return (
 		<motion.main className={styles.page} initial="hidden" animate="show" variants={page} >
 			<JsonLd data={data} />
@@ -213,9 +214,10 @@ export default function GalleryPage() {
 							aria-label={`Open ${img.alt}`}
 							variants={tileV}
 							initial="hidden"
-							animate="show"
 							exit="exit"
-							whileHover={{ y: -4 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{ ...tween, layout: tween }}
+							whileHover={{ y: -3 }}
 							whileTap={{ scale: 0.88 }}
 						>
 							<img src={img.src} alt={img.alt} loading="lazy" />
