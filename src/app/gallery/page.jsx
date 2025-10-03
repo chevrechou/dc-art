@@ -62,7 +62,7 @@ const FLASH_STYLE = [
 ];
 
 export default function GalleryPage() {
-	const reduce = useReducedMotion();
+	const reduce = false //
 
 	/* ---- portfolio state ---- */
 	const [idx, setIdx] = useState(null); // index within active list
@@ -154,12 +154,12 @@ export default function GalleryPage() {
 		show: {
 			opacity: 1,
 			scale: 1,
-			transition: { duration: reduce ? 0 : .95, ease: [0.32, 1, 0.56, 1] },
+			transition: { duration: reduce ? 0 : 1.95, ease: [0.32, 1, 0.56, 1] },
 		},
 		exit: {
 			opacity: 0,
 			scale: 0.98,
-			transition: { duration: reduce ? 0 : 0.54 },
+			transition: { duration: reduce ? 0 : 2.54 },
 		},
 	};
 
@@ -172,7 +172,6 @@ export default function GalleryPage() {
 		return a;
 	};
 
-	const tween = { type: "tween", ease: [0.4, 1, 0.6, 1], duration: 2 };
 	return (
 		<motion.main className={styles.page} initial="hidden" animate="show" variants={page} >
 			<JsonLd data={data} />
@@ -205,28 +204,25 @@ export default function GalleryPage() {
 				variants={up}
 				layout="position"
 			>
-				<AnimatePresence>
-					{workData.map((img, i) => (
-						<motion.button
-							key={img.id}
-							className={styles.tile}
-							onClick={() => openFrom("work", i)}
-							aria-label={`Open ${img.alt}`}
-							variants={tileV}
-							initial="hidden"
-							exit="exit"
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{ ...tween, layout: tween }}
-							whileHover={{ y: -3 }}
-							whileTap={{ scale: 0.88 }}
-						>
-							<img src={img.src} alt={img.alt} loading="lazy" />
-							<span className={styles.badge}>
-								{KIND_LABEL[img.kind] ?? "Other"}
-							</span>
-						</motion.button>
-					))}
-				</AnimatePresence>
+				{workData.map((img, i) => (
+					<motion.button
+						key={img.id}
+						className={styles.tile}
+						onClick={() => openFrom("work", i)}
+						aria-label={`Open ${img.alt}`}
+						variants={tileV}
+						initial={false}
+						exit="exit"
+						animate={{ opacity: 1, scale: 1 }}
+						whileHover={{ y: -5 }}
+						whileTap={{ scale: 0.88 }}
+					>
+						<img src={img.src} alt={img.alt} loading="lazy" />
+						<span className={styles.badge}>
+							{KIND_LABEL[img.kind] ?? "Other"}
+						</span>
+					</motion.button>
+				))}
 			</motion.section>
 
 			{/* ===== Flash (new) ===== */}
