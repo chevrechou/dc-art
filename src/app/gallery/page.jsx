@@ -351,6 +351,33 @@ export default function GalleryPage() {
 					</motion.div>
 				)}
 			</AnimatePresence>
-		</motion.main>
+			{/* ===== More on Instagram ===== */}
+			<section className={styles.more}>
+				<h2 className={styles.moreTitle}>See more on Instagram</h2>
+				<p className={styles.moreCopy}>
+					Follow &nbsp;
+					<strong >
+						<a
+							href="https://www.instagram.com/dc_art_collective/"
+							target="_blank"
+							rel="noreferrer"
+							aria-label="Open Instagram @dc_art_collective"
+						>
+							@dc_art_collective </a>
+					</strong>
+					&nbsp; for work in progress, healed shots, and flash.
+				</p>
+				<a
+					href="https://www.instagram.com/dc_art_collective/"
+					target="_blank"
+					rel="noreferrer"
+					className={styles.igBtn}
+					aria-label="Open Instagram @dc_art_collective"
+				>
+					View more on Instagram
+				</a>
+			</section>
+
+		</motion.main >
 	);
 }
