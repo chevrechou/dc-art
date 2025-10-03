@@ -304,7 +304,7 @@
 .moreTitle {
 	font-size: clamp(1.25rem, 1vw + 1rem, 1.75rem);
 	margin: 0 0 .5rem;
-	font-size: 1.rem;
+	font-size: 1.3rem;
 }
 
 .moreCopy {
