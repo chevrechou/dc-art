@@ -213,7 +213,7 @@ export default function GalleryPage() {
 						variants={tileV}
 						initial={false}
 						exit="exit"
-						animate={{ opacity: 1, scale: 1 }}
+						// animate={{ opacity: 1, scale: 1 }}
 						whileHover={{ y: -5 }}
 						whileTap={{ scale: 0.88 }}
 					>
