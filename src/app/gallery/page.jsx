@@ -69,6 +69,7 @@ export default function GalleryPage() {
 	const [activeSet, setActiveSet] = useState(null); // "work" | "flash" | null
 	const [filter, setFilter] = useState("all");
 	const [workOrder, setWorkOrder] = useState(RAW);
+	const [filtering, setFiltering] = useState(false);
 
 	// randomize once per page load (client side only)
 	useEffect(() => {
@@ -114,6 +115,16 @@ export default function GalleryPage() {
 		setIdx((i) => (!activeList.length ? null : i === activeList.length - 1 ? 0 : i + 1));
 	};
 
+	const handleFilter = (next) => {
+		if (next === filter) return;
+		setFiltering(true);
+		setFilter(next);
+		// 2 RAFs to ensure browser commits the "prep" state before we remove it
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => setFiltering(false));
+		});
+	};
+
 	/* ---- keyboard support ---- */
 	useEffect(() => {
 		const onKey = (e) => {
@@ -135,7 +146,7 @@ export default function GalleryPage() {
 				duration: reduce ? 0 : 0.6,
 				ease: [0.42, 1, 0.76, 1],
 				when: "beforeChildren",
-				staggerChildren: reduce ? 0 : 0.38,
+				staggerChildren: reduce ? 0 : 0.3,
 			},
 		},
 	};
@@ -145,7 +156,7 @@ export default function GalleryPage() {
 		show: {
 			opacity: 1,
 			y: 0,
-			transition: { duration: reduce ? 0 : 2.5, ease: [0.32, 1, 0.66, 1] },
+			transition: { duration: reduce ? 0 : 1.9, ease: [0.32, 1, 0.66, 1] },
 		},
 	};
 
@@ -189,7 +200,7 @@ export default function GalleryPage() {
 								role="tab"
 								aria-selected={filter === f.key}
 								className={`${styles.pill} ${filter === f.key ? styles.pillActive : ""}`}
-								onClick={() => setFilter(f.key)}
+								onClick={() => handleFilter(f.key)}
 							>
 								{f.label}
 							</button>
@@ -198,7 +209,7 @@ export default function GalleryPage() {
 				</div>
 			</motion.header>
 
-			<motion.section
+			{/* <motion.section
 				className={styles.grid}
 				aria-label="Portfolio gallery"
 				variants={up}
@@ -223,8 +234,33 @@ export default function GalleryPage() {
 						</span>
 					</motion.button>
 				))}
+			</motion.section> */}
+			<motion.section
+				aria-label="Portfolio gallery"
+				variants={up}
+				layout="position"
+			>
+				<section
+					className={`${styles.grid} ${filtering ? styles.prep : styles.play}`}
+					aria-label="Portfolio gallery"
+				>
+					{workData.map((img, i) => (
+						<button
+							key={`${filter}-${img.id}`} // remount on filter for clean CSS transition
+							className={styles.tile}
+							style={{ "--i": i }}
+							aria-label={`Open ${img.alt}`}
+							onClick={() => {
+								// open your lightbox the same way you did before
+								openFrom("work", i);
+							}}
+						>
+							<img src={img.src} alt={img.alt} loading={i < 8 ? "eager" : "lazy"} decoding="async" />
+							<span className={styles.badge}>{KIND_LABEL[img.kind] ?? "Other"}</span>
+						</button>
+					))}
+				</section>
 			</motion.section>
-
 			{/* ===== Flash (new) ===== */}
 			{/* <motion.section
 				className={styles.flashSection}

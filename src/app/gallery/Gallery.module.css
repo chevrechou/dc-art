@@ -6,8 +6,14 @@
 	color: #ffffff;
 	text-shadow: 0 4px 4px rgb(0, 0, 0);
 	background-color: #222222;
+}
 
-
+.page {
+	--tile-dur: 1800ms;
+	/* overall tile enter speed */
+	--tile-stagger: 80ms;
+	/* delay between tiles */
+	--tile-ease: cubic-bezier(.25, 1, .5, 1);
 }
 
 /* header with filters and actions */
@@ -113,7 +119,11 @@
 	border: 1px solid rgba(255, 255, 255, 0.53);
 	filter: brightness(1) contrast(1.0) saturate(1);
 	transform: translateY(3px) scale(0.83);
-	transition: transform 1s ease, opacity 0.9s ease;
+	will-change: transform, opacity;
+	transition:
+		opacity var(--tile-dur) var(--tile-ease),
+		transform var(--tile-dur) var(--tile-ease),
+		filter calc(var(--tile-dur) * .8) var(--tile-ease);
 }
 
 .tile.visible {
@@ -126,12 +136,25 @@
 	height: 100%;
 	object-fit: cover;
 	transform: translateZ(0);
-	transition: transform 0.4s ease;
+	transition: transform 0.5s cubic-bezier(.25, 1, .5, 1);
 }
 
 .tile:hover img,
 .tile:focus-visible img {
 	transform: scale(1.1);
+}
+
+.prep .tile {
+	opacity: 0;
+	transform: translateY(10px) scale(.94);
+}
+
+.play .tile {
+	opacity: 1;
+	transform: none;
+	transition-delay: calc(var(--i, 0) * var(--tile-stagger));
+	/* stagger by index */
+	/* stagger by index */
 }
 
 /* small label showing type */
