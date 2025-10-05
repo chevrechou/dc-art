@@ -57,14 +57,17 @@
 
 /* Mobile tweaks */
 @media (max-width: 900px) {
-  .wrap{
-    position: fixed;
+  .wrap {
+    position: absolute;
+
   }
+
   .stripes {
     inset: 6vh -20vw;
     grid-auto-columns: 48vw;
     /* fewer, wider stripes */
     gap: 3vw;
+
     transform: rotate(-14deg) scale(1.2);
   }
 
