@@ -4,8 +4,8 @@ import styles from "./DiagonalBG.module.css";
 
 export default function DiagonalBG({
   images = [],
-  intensity = 0.6,      // 0.04 to 0.14 recommended
-  mouseTilt = 0.8,       // 0 to disable
+  intensity = 0.15,      // 0.04 to 0.14 recommended
+  mouseTilt = 0.5,       // 0 to disable
 }) {
   const railRef = useRef(null);
 
