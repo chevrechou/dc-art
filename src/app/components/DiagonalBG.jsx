@@ -21,7 +21,7 @@ export default function DiagonalBG({
 
     const setTransform = (y) => {
       // y is scrollY
-      const offset = -(y * intensity); // move opposite scroll
+      const offset = 0//-(y * intensity); // move opposite scroll
       // combine the base rotate/scale from CSS with a translate for parallax
       rail.style.transform = `translate3d(0, ${offset}px, 0) rotate(-12deg) scale(1.15)`;
     };
@@ -64,17 +64,17 @@ export default function DiagonalBG({
     };
 
     // init
-    onResize();
-    onScroll();
+    // onResize();
+    // onScroll();
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    window.addEventListener("mousemove", onMouseMove);
+    // window.addEventListener("scroll", onScroll, { passive: true });
+    // window.addEventListener("resize", onResize);
+    // window.addEventListener("mousemove", onMouseMove);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("mousemove", onMouseMove);
+      // window.removeEventListener("scroll", onScroll);
+      // window.removeEventListener("resize", onResize);
+      // window.removeEventListener("mousemove", onMouseMove);
     };
   }, [intensity, mouseTilt]);
 
