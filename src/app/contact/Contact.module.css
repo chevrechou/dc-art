@@ -5,6 +5,9 @@
 	margin: 0rem 2rem 0;
 	color: #ffffff;
 	text-shadow: 0 4px 4px rgb(0, 0, 0);
+	z-index: 2;
+	margin-bottom: 10rem;
+
 }
 
 /* Hero */
@@ -19,13 +22,14 @@
 	font-weight: 800;
 	letter-spacing: 0.02em;
 	color: #fff;
+	text-wrap: balance;
 }
 
 .kicker {
 	margin: 0 auto 10px;
 	max-width: 700px;
 	color: #e5e5e5;
-	font-size: 1.3rem;
+	font-size: 1.8rem;
 }
 
 .quote {
@@ -34,25 +38,15 @@
 	padding: 0rem 4rem;
 	font-style: italic;
 	line-height: 1.2;
-	opacity: 1.2;
+	opacity: 1.5;
 	font-weight: 600;
-	font-size: 2rem;
+	font-size: 2em;
 	color: #fbb533
 }
 
+
 .quote p {
 	margin: .5rem 0;
-}
-
-.quote::before {
-	content: "“";
-	position: absolute;
-	left: .25rem;
-	top: -.35rem;
-	font-size: 3rem;
-	line-height: 1;
-	opacity: .25;
-	pointer-events: none;
 }
 
 .cite {
@@ -72,7 +66,7 @@
 	flex-wrap: wrap;
 	gap: 12px;
 	justify-content: center;
-	margin-top: 4rem;
+	margin-top: 2rem;
 
 }
 
@@ -521,8 +515,9 @@
 		min-width: 290px !important;
 		margin: 0 auto !important;
 	}
-	.quote{
+
+	.quote {
 		font-size: 1.4rem;
-		padding: 0rem 3rem;	
+		padding: 0rem 3rem;
 	}
 }

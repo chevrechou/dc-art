@@ -37,7 +37,7 @@ export default function About() {
 
   const up = {
     hidden: { opacity: 0, y: 16 },
-    show: { opacity: 1, y: 0, transition: { duration: 2.3, ease: [0.32, 1, 0.56, 1] } }
+    show: { opacity: 1, y: 0, transition: { duration: 1.5, ease: [0.32, 1, 0.56, 1] } }
   };
 
   const fade = {

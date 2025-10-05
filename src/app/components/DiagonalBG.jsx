@@ -4,8 +4,8 @@ import styles from "./DiagonalBG.module.css";
 
 export default function DiagonalBG({
   images = [],
-  intensity = 0.3,      // 0.04 to 0.14 recommended
-  mouseTilt = 0.6,       // 0 to disable
+  intensity = 0.6,      // 0.04 to 0.14 recommended
+  mouseTilt = 0.8,       // 0 to disable
 }) {
   const railRef = useRef(null);
 
@@ -54,7 +54,7 @@ export default function DiagonalBG({
       const nx = (e.clientX / innerWidth) * 2 - 1;   // -1..1
       const ny = (e.clientY / innerHeight) * 2 - 1;  // -1..1
       // small translate based on cursor
-      const tiltX = nx * 6 * mouseTilt;  // px
+      const tiltX = nx * 10 * mouseTilt;  // px
       const tiltY = ny * 4 * mouseTilt;  // px
       // keep current scroll offset
       const y = window.scrollY || 0;
@@ -81,11 +81,11 @@ export default function DiagonalBG({
   const list = images.length
     ? images
     : [
-        "/images/tattoo-1.jpg",
-        "/images/tattoo-2.jpg",
         "/images/tattoo-3.jpg",
-        "/images/tattoo-4.jpg",
-        "/images/tattoo-5.jpg",
+        "/images/gallery/bg/bg-5.jpeg",
+       "/images/gallery/pop/pop-culture-12.jpeg",
+        "/images/gallery/pop/pop-culture-10.jpeg",
+        "/images/gallery/color/color-6.jpeg",
         "/images/tattoo-6.jpg",
       ];
 

@@ -156,7 +156,7 @@ export default function GalleryPage() {
 		show: {
 			opacity: 1,
 			y: 0,
-			transition: { duration: reduce ? 0 : 1.9, ease: [0.32, 1, 0.66, 1] },
+			transition: { duration: reduce ? 0 : 1.5, ease: [0.32, 1, 0.66, 1] },
 		},
 	};
 

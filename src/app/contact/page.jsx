@@ -43,10 +43,10 @@ export default function ContactPage() {
 		show: {
 			opacity: 1,
 			transition: {
-				duration: reduce ? 0 : 0.75,
+				duration: reduce ? 0 : 0.6,
 				ease: [0.42, 1, 0.86, 1],
 				when: "beforeChildren",
-				staggerChildren: reduce ? 0 : 0.32,
+				staggerChildren: reduce ? 0 : 0.52,
 			},
 		},
 	};
@@ -56,7 +56,7 @@ export default function ContactPage() {
 		show: {
 			opacity: 1,
 			y: 0,
-			transition: { duration: reduce ? 0 : 2.5, ease: [0.32, 1, 0.66, 1] },
+			transition: { duration: reduce ? 0 : 1.8, ease: [0.32, 1, 0.66, 1] },
 		},
 	};
 
@@ -122,38 +122,45 @@ export default function ContactPage() {
 			{/* Hero */}
 			<motion.section className={styles.hero} variants={up}>
 				<h1 className={styles.title}>Contact</h1>
-				<p className={styles.kicker}>Let's work on your next project</p>
+				<p className={styles.kicker}>Let’s work on your next project</p>
+
 				<motion.blockquote className={styles.quote} variants={up}>
 					<p>
 						Every tattoo I take on is a chance to bring years of practice and passion to life.
-						I look for clients who want to collaborate but also trust me with the creative freedom
-						to do my best work.
+						I look for clients who want to collaborate but also trust me with the creative
+						freedom to do my best work.
 					</p>
 					<p>
 						My proudest moments are when I create pieces I would be honored to wear myself,
 						work that feels timeless, personal, and powerful.
 					</p>
 					<footer className={styles.cite}>
-						<cite>- Derek Calkins</cite>
+						<cite>— Derek Calkins</cite>
 					</footer>
 				</motion.blockquote>
 
-
 				<div className={styles.actions}>
-					<a className={styles.action} href={`tel:${STUDIO.phone}`}>
-						<FontAwesomeIcon icon={faPhone} /> Call
+					<a className={styles.action} href={`tel:${STUDIO.phone}`} aria-label="Call the studio">
+						<FontAwesomeIcon icon={faPhone} /> <span>Call</span>
 					</a>
-					<a className={styles.action} href={`sms:${STUDIO.phone}`}>
-						<FontAwesomeIcon icon={faPhone} /> Text
+					<a className={styles.action} href={`sms:${STUDIO.phone}`} aria-label="Text the studio">
+						<FontAwesomeIcon icon={faPhone} /> <span>Text</span>
 					</a>
-					<a className={styles.action} href={`mailto:${STUDIO.email}`}>
-						<FontAwesomeIcon icon={faEnvelope} /> Email
+					<a className={styles.action} href={`mailto:${STUDIO.email}`} aria-label="Email the studio">
+						<FontAwesomeIcon icon={faEnvelope} /> <span>Email</span>
 					</a>
-					<a className={styles.action} href={STUDIO.maps} target="_blank" rel="noreferrer">
-						<FontAwesomeIcon icon={faMapMarkerAlt} /> Map
+					<a
+						className={styles.action}
+						href={STUDIO.maps}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Open studio location in Maps"
+					>
+						<FontAwesomeIcon icon={faMapMarkerAlt} /> <span>Map</span>
 					</a>
 				</div>
 			</motion.section>
+
 
 			{/* Two column layout */}
 			<section className={styles.twoCol}>

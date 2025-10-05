@@ -5,6 +5,8 @@ body {
 	width: 100%;
 	left: -4px;
 	position: absolute;
+	background-color: #222222;
+	z-index: -1;
 }
 
 /* Default header height var, used to offset fixed header site-wide */

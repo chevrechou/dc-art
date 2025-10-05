@@ -13,7 +13,7 @@ export default function UpcomingClient() {
 			opacity: 1,
 			transition: {
 				duration: reduce ? 0 : 0.65,
-				ease: [0.32, 0.8 , 0.46, 0.8],
+				ease: [0.32, 0.8, 0.46, 0.8],
 				when: "beforeChildren",
 				staggerChildren: reduce ? 0 : 0.5,
 			},
@@ -25,7 +25,7 @@ export default function UpcomingClient() {
 		show: {
 			opacity: 1,
 			y: 0,
-			transition: { duration: reduce ? 0 : 2.5, ease: [0.32, 1, 0.56, 1] },
+			transition: { duration: reduce ? 0 : 1.4, ease: [0.32, 1, 0.56, 1] },
 		},
 	};
 
