@@ -57,6 +57,9 @@
 
 /* Mobile tweaks */
 @media (max-width: 900px) {
+  .wrap{
+    position: fixed;
+  }
   .stripes {
     inset: 6vh -20vw;
     grid-auto-columns: 48vw;
