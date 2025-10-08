@@ -205,7 +205,7 @@
 	border: 2px solid rgba(255, 255, 255, 0.4);
 	color: #f3f3f3;
 	line-height: 1.55;
-	font-size: 1.2rem
+	font-size: 1.3rem
 }
 
 .notice svg {
@@ -233,7 +233,7 @@
 	display: grid;
 	gap: 6px;
 	font-weight: 600;
-	font-size: 1.15rem;
+	font-size: 1.25rem;
 	color: #f5f5f5;
 	text-align: left;
 	margin: 18px 12px;
@@ -325,7 +325,7 @@
 	white-space: pre-wrap;
 	line-height: 1.65;
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-	font-size: 0.95rem;
+	font-size: 1.15rem;
 	color: #f6f6f6;
 	background: rgba(255, 255, 255, 0.05);
 	border: 2px solid rgba(255, 255, 255, 0.25);
@@ -348,7 +348,7 @@
 	min-height: 42px;
 	padding: 0 16px;
 	border-radius: 10px;
-	font-size: 0.95rem;
+	font-size: 1rem;
 	text-decoration: none;
 	cursor: pointer;
 	transition: transform .1s, background .2s, border-color .2s;
@@ -398,7 +398,7 @@
 	border: 1px solid rgba(255, 255, 255, 0.18);
 	border-radius: 8px;
 	padding: 6px 10px;
-	font-size: 0.85rem;
+	font-size: 0.95rem;
 	white-space: nowrap;
 	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
@@ -457,7 +457,7 @@
 	}
 
 	.actions a {
-		font-size: 0.9rem;
+		font-size: 1.05rem;
 		padding: 8px 12px;
 	}
 

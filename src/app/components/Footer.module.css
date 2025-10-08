@@ -191,7 +191,7 @@
 
 	.h4 {
 		text-align: center;
-		font-size: 1rem;
+		font-size: 1.2rem;
 	}
 
 	.newsletter {
@@ -232,10 +232,10 @@
 	}
 
 	.title {
-		font-size: 1.15rem;
+		font-size: 1.35rem;
 	}
 
 	.copy {
-		font-size: 0.95rem;
+		font-size: 1.15rem;
 	}
 }
