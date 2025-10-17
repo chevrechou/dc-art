@@ -6,7 +6,7 @@ import Script from "next/script";
 import styles from "./Contact.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faEnvelope, faMapMarkerAlt, faCopy, faCircleInfo, faListCheck, faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import DiagonalBG from "../components/DiagonalBG";
+import DiagonalBG from "../components/DiagonalBG/DiagonalBG";
 import JsonLd from "../components/JsonLd";
 
 const STUDIO = {

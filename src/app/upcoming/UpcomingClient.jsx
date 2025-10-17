@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import ConventionCalendar from "../components/ConventionCalendar";
+import ConventionCalendar from "../components/ConventionCalendar/ConventionCalendar";
 import styles from "./Upcoming.module.css";
 
 export default function UpcomingClient() {
