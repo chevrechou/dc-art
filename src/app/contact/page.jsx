@@ -11,7 +11,7 @@ import JsonLd from "../components/JsonLd";
 
 const STUDIO = {
 	name: "DC Art - Derek Calkins",
-	phone: "+1-725-577-3339",
+	phone: "+1-920-376-3647",
 	email: "dcartcollective514@gmail.com",
 	ig: "https://instagram.com/dc_art_collective",
 	address: "6910 S Rainbow Blvd #107, Las Vegas, NV 89118",
@@ -22,9 +22,9 @@ const data = {
 	"@context": "https://schema.org",
 	"@type": "LocalBusiness",
 	name: "DC Art - Derek Calkins",
-	image: "https://dcartstudio.com/images/dc-profile.jpg",
-	url: "https://dcartstudio.com/contact",
-	telephone: "+1-725-577-3339",
+	image: "https://www.derekcalkinstattoo.com/images/dc-profile.jpg",
+	url: "https://www.derekcalkinstattoo.com/contact",
+	telephone: "+1-920-376-3647",
 	address: {
 		"@type": "PostalAddress",
 		streetAddress: "6910 South Rainbow Boulevard Unit 107",

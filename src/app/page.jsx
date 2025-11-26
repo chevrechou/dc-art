@@ -17,8 +17,8 @@ const data = {
 	"@type": "Person",
 	name: "Derek Calkins",
 	jobTitle: "Tattoo Artist",
-	url: "https://dcartstudio.com",
-	image: "https://dcartstudio.com/images/dc-profile.jpg",
+	url: "https://www.derekcalkinstattoo.com",
+	image: "https://www.derekcalkinstattoo.com/images/dc-profile.jpg",
 	sameAs: [
 		"https://www.instagram.com/dc_art_collective/",
 		"https://michael585.substack.com/"

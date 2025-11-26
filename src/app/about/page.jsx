@@ -13,7 +13,7 @@ const data = {
   mainEntity: {
     "@type": "Person",
     name: "Derek Calkins",
-    url: "https://dcartstudio.com/about"
+    url: "https://www.derekcalkinstattoo.com/about"
   }
 };
 

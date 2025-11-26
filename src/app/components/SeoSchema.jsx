@@ -15,7 +15,7 @@ export default function SeoSchema() {
       postalCode: "89118",
       addressCountry: "US"
     },
-    url: "https://dcartstudio.com",
+    url: "https://www.derekcalkinstattoo.com",
     sameAs: [
       "https://www.instagram.com/dc_art_collective/",
       "https://michael585.substack.com/"

@@ -9,7 +9,7 @@ export const metadata = {
 		title: "Upcoming Events | Derek Calkins",
 		description:
 			"Conventions, expos, and guest spots. See where Derek will be tattooing next and how to book.",
-		url: "https://dcartstudio.com/upcoming",
+		url: "https://www.derekcalkinstattoo.com/upcoming",
 		siteName: "Derek Calkins",
 		type: "website",
 		locale: "en_US",

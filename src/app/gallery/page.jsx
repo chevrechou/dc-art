@@ -10,7 +10,7 @@ const data = {
 	"@context": "https://schema.org",
 	"@type": "CollectionPage",
 	name: "Tattoo Gallery",
-	url: "https://dcartstudio.com/gallery",
+	url: "https://www.derekcalkinstattoo.com/gallery",
 	hasPart: [
 		{ "@type": "CreativeWork", name: "Black and Grey Realism" },
 		{ "@type": "CreativeWork", name: "Color Realism" },
